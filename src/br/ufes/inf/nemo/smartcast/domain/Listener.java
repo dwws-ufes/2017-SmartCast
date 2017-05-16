@@ -14,6 +14,8 @@ public class Listener extends PersistentObjectSupport{
 	
 	private String password;
 	
+	private String userName;
+	
 	@ManyToMany
 	private Set<Podcast> podcasts;
 
@@ -39,5 +41,13 @@ public class Listener extends PersistentObjectSupport{
 
 	public void setPodcasts(Set<Podcast> podcasts) {
 		this.podcasts = podcasts;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

@@ -13,8 +13,7 @@ import br.ufes.inf.nemo.smartcast.persistence.PodcastDAO;
 @PermitAll
 public class ManagePodcastsServiceBean extends CrudServiceBean<Podcast> implements ManagePodcastsService {
 
-	@EJB
-	private PodcastDAO podcastDao;
+	@EJB private PodcastDAO podcastDao;
 
 	@Override
 	public BaseDAO<Podcast> getDAO() {

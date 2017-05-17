@@ -10,6 +10,11 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 @Entity
 public class Listener extends PersistentObjectSupport{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6385113507627292453L;
+
 	private String email;
 	
 	private String password;

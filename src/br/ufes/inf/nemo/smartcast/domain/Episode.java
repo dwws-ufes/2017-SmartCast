@@ -1,12 +1,9 @@
 package br.ufes.inf.nemo.smartcast.domain;
 
 import java.util.Map;
-import java.util.Set;
-
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 
@@ -15,12 +12,17 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 @Entity
 public class Episode extends PersistentObjectSupport {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8044979677176622862L;
+
 	@ManyToOne
 	private Podcast podcast;
 	
 	@ElementCollection
-	@CollectionTable(name="Episode_Tag")
-	@MapKeyColumn(name="Key")
+	@CollectionTable(name="episode_tag")
+	@MapKeyColumn(name="tagname")
 	private Map<String, String> tags;
 
 	public Podcast getPodcast() {

@@ -13,6 +13,10 @@ import br.ufes.inf.nemo.smartcast.persistence.PodcastDAO;
 @PermitAll
 public class ManagePodcastsServiceBean extends CrudServiceBean<Podcast> implements ManagePodcastsService {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8620191407659179440L;
 	@EJB private PodcastDAO podcastDao;
 
 	@Override

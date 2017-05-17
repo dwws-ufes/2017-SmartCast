@@ -10,6 +10,10 @@ import br.ufes.inf.nemo.smartcast.domain.Podcast;
 @Stateless
 public class PodcastJPADAO extends BaseJPADAO<Podcast> implements PodcastDAO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -241958215854984476L;
 	/** The application's persistent context provided by the application server. */
 	@PersistenceContext
 	private EntityManager entityManager;

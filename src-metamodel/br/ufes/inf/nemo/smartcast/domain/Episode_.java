@@ -6,9 +6,9 @@ import javax.persistence.metamodel.MapAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-05-16T23:17:44.262-0300")
+@Generated(value="Dali", date="2017-05-18T02:19:48.624-0300")
 @StaticMetamodel(Episode.class)
 public class Episode_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<Episode, Podcast> podcast;
-	public static volatile MapAttribute<Episode, String, String> tags;
+	public static volatile MapAttribute<Episode, String, Tag> tags;
 }

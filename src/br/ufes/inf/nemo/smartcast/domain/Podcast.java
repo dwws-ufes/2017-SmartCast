@@ -25,7 +25,7 @@ public class Podcast extends PersistentObjectSupport{
 	@ElementCollection
 	@CollectionTable(name="podcast_tag")
 	@MapKeyColumn(name="tagname")
-	private Map<String, String> tags;
+	private Map<String, Tag> tags;
 	
 	private String url;
 
@@ -36,12 +36,17 @@ public class Podcast extends PersistentObjectSupport{
 	public void setEpisodes(List<Episode> episodes) {
 		this.episodes = episodes;
 	}
+	
+	public void addEpisode(Episode episode){
+		episode.setPodcast(this);
+		this.episodes.add(episode);
+	}
 
-	public Map<String, String> getTags() {
+	public Map<String, Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Map<String, String> tags) {
+	public void setTags(Map<String, Tag> tags) {
 		this.tags = tags;
 	}
 
@@ -53,11 +58,17 @@ public class Podcast extends PersistentObjectSupport{
 		this.url = url;
 	}
 	
-	public void addTag(String value, String name){
-		this.tags.put(name, value);
+	public void putTag(String name, String value){
+		Tag t = new Tag();
+		t.setValue(value);
+		this.tags.put(name, t);
 	}
 	
-	public String getTag(String name){
+	public void putTag(String name, Tag t){
+		this.tags.put(name, t);
+	}
+	
+	public Tag getTag(String name){
 		return this.tags.get(name);
 	}
 }

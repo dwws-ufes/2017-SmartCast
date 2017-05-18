@@ -23,7 +23,7 @@ public class Episode extends PersistentObjectSupport {
 	@ElementCollection
 	@CollectionTable(name="episode_tag")
 	@MapKeyColumn(name="tagname")
-	private Map<String, String> tags;
+	private Map<String, Tag> tags;
 
 	public Podcast getPodcast() {
 		return podcast;
@@ -33,19 +33,25 @@ public class Episode extends PersistentObjectSupport {
 		this.podcast = podcast;
 	}
 
-	public Map<String, String> getTags() {
+	public Map<String, Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Map<String, String> tags) {
+	public void setTags(Map<String, Tag> tags) {
 		this.tags = tags;
 	}
 	
-	public void addTag(String value, String name){
-		this.tags.put(name, value);
+	public void putTag(String name, String value){
+		Tag t = new Tag();
+		t.setValue(value);
+		this.tags.put(name, t);
 	}
 	
-	public String getTag(String name){
+	public void putTag(String name, Tag t){
+		this.tags.put(name, t);
+	}
+	
+	public Tag getTag(String name){
 		return this.tags.get(name);
 	}
 }

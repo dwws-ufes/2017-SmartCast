@@ -1,5 +1,6 @@
 package br.ufes.inf.nemo.smartcast.domain;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -12,7 +13,8 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 @Entity
 public class Tag extends PersistentObjectSupport {
 	
-	private String value;
+	@ElementCollection
+	private List<String> value;
 	
 	@ElementCollection
 	@CollectionTable(name="tag_tag")
@@ -24,12 +26,16 @@ public class Tag extends PersistentObjectSupport {
 	@MapKeyColumn(name="attributenamename")
 	private Map<String, String> attributes;
 
-	public String getValue() {
+	public List<String> getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(List<String> value) {
 		this.value = value;
+	}
+	
+	public void addValue(String value){
+		this.value.add(value);
 	}
 
 	public Map<String, Tag> getTags() {
@@ -46,7 +52,7 @@ public class Tag extends PersistentObjectSupport {
 	
 	public void putTag(String name, String tagValue){
 		Tag tag = new Tag();
-		tag.setValue(tagValue);
+		tag.addValue(tagValue);
 		this.tags.put(name, tag);
 	}
 	

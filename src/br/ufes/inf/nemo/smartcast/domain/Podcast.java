@@ -60,7 +60,7 @@ public class Podcast extends PersistentObjectSupport{
 	
 	public void putTag(String name, String value){
 		Tag t = new Tag();
-		t.setValue(value);
+		t.addValue(value);
 		this.tags.put(name, t);
 	}
 	

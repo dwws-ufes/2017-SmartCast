@@ -35,6 +35,9 @@ public class ParsePodcastFeed {
 	public Podcast readFeed() {
 		Podcast feed = new Podcast();
 		feed.setTags(new HashMap<>());
+		feed.setEpisodes(new ArrayList<>());
+		System.out.println("Banho");
+		int itemCount = 0;
 		try {
 
 			// First create a new XMLInputFactory
@@ -44,13 +47,15 @@ public class ParsePodcastFeed {
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 			// read the XML document
 			XMLEvent event = eventReader.nextEvent();
+			
 			while (eventReader.hasNext() && !(event.isStartElement() && getStartEventAsName(event).equals("channel"))) {
-
+				System.out.println("1");
 				event = eventReader.nextEvent();
 			}
 			event = eventReader.nextEvent();
+			
 			while (eventReader.hasNext() && !(event.isEndElement() && getEndEventAsName(event).equals("channel"))) {
-
+				System.out.println("2");
 				if (event.isStartElement()) {
 
 					String name = getStartEventAsName(event);
@@ -58,17 +63,21 @@ public class ParsePodcastFeed {
 					Tag tag = readTag(event, eventReader);
 
 					if (name.equals("item")) {
-						event = eventReader.nextEvent();
+						itemCount++;
+						while((event.isStartElement() && getStartEventAsName(event).equals("item")) || (event.isCharacters() && getCharacterData(event).trim().isEmpty())){
+							event = eventReader.nextEvent();
+						}
 						Episode ep = new Episode();
 						ep.setTags(new HashMap<>());
-						while (eventReader.hasNext()
-								&& !(event.isEndElement() && getEndEventAsName(event).equals("item"))) {
+						while (eventReader.hasNext()) {
 							if (event.isStartElement()) {
 								String epTagName = getStartEventAsName(event);
 
 								Tag epTag = readTag(event, eventReader);
 								ep.putTag(epTagName, epTag);
 
+							}else if (event.isEndElement() && getEndEventAsName(event).equals("item")){
+								break;
 							}
 							event = eventReader.nextEvent();
 						}
@@ -79,12 +88,14 @@ public class ParsePodcastFeed {
 					feed.putTag(name, tag);
 
 				}
-
-				event = eventReader.nextEvent();
+				if(eventReader.hasNext()){
+					event = eventReader.nextEvent();
+				}
 			}
 		} catch (XMLStreamException e) {
 			throw new RuntimeException(e);
 		}
+		System.out.println("Item Count: " + itemCount);
 		return feed;
 	}
 
@@ -151,7 +162,10 @@ public class ParsePodcastFeed {
 				if (s.trim().isEmpty()) {
 					continue;
 				} else {
-					t.setValue(s);
+					if(t.getValue() == null){
+						t.setValue(new ArrayList<>());
+					}
+					t.addValue(s);
 				}
 			} else if (evt.isEndElement()) {
 				break;

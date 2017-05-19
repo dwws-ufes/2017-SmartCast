@@ -6,6 +6,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
@@ -43,7 +44,7 @@ public class Episode extends PersistentObjectSupport {
 	
 	public void putTag(String name, String value){
 		Tag t = new Tag();
-		t.setValue(value);
+		t.addValue(value);
 		this.tags.put(name, t);
 	}
 	

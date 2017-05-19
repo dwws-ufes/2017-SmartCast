@@ -6,7 +6,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.MapAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-05-18T18:07:17.440-0300")
+@Generated(value="Dali", date="2017-05-19T09:09:23.269-0300")
 @StaticMetamodel(Tag.class)
 public class Tag_ extends PersistentObjectSupport_ {
 	public static volatile ListAttribute<Tag, String> value;

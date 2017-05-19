@@ -1,5 +1,6 @@
 package br.ufes.inf.nemo.smartcast.domain;
 
+import java.util.List;
 import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -11,7 +12,7 @@ import javax.persistence.OneToMany;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
 @Entity
-public class Episode extends PersistentObjectSupport {
+public class Episode extends PersistentObjectSupport implements Tageable {
 
 	/**
 	 * 
@@ -30,29 +31,39 @@ public class Episode extends PersistentObjectSupport {
 		return podcast;
 	}
 
-	public void setPodcast(Podcast podcast) {
+	protected void setPodcast(Podcast podcast) {
 		this.podcast = podcast;
 	}
 
+	@Override
 	public Map<String, Tag> getTags() {
 		return tags;
 	}
 
+	@Override
 	public void setTags(Map<String, Tag> tags) {
 		this.tags = tags;
 	}
 	
+	@Override
 	public void putTag(String name, String value){
 		Tag t = new Tag();
 		t.addValue(value);
 		this.tags.put(name, t);
 	}
 	
+	@Override
 	public void putTag(String name, Tag t){
 		this.tags.put(name, t);
 	}
 	
+	@Override
 	public Tag getTag(String name){
 		return this.tags.get(name);
 	}
+	
+	@Override
+	public void addAllTag(String name, List<String> values) {
+		this.tags.get(name).getValue().addAll(values);
+	};
 }

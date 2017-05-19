@@ -14,13 +14,38 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.XMLEvent;
+
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+
 import javax.xml.stream.events.Attribute;
 
 import br.ufes.inf.nemo.smartcast.domain.Episode;
 import br.ufes.inf.nemo.smartcast.domain.Podcast;
 import br.ufes.inf.nemo.smartcast.domain.Tag;
+import br.ufes.inf.nemo.smartcast.domain.Tageable;
 
 public class ParsePodcastFeed {
+
+	static final String TITLE = "title";
+	static final String DESCRIPTION = "description";
+	static final String CHANNEL = "channel";
+	static final String LANGUAGE = "language";
+	static final String COPYRIGHT = "copyright";
+	static final String LINK = "link";
+	static final String AUTHOR = "author";
+	static final String ITEM = "item";
+	static final String PUB_DATE = "pubDate";
+	static final String GUID = "guid";
+	static final String IMAGE = "image";
+	static final String URL = "url";
+	static final String LAST_BUILD_DATE = "lastBuildDate";
+	static final String WIDTH = "width";
+	static final String HEIGHT = "height";
+	static final String SUBTITLE = "subtitle";
+	static final String CATEGORY = "category";
+	static final String SUMMARY = "summary";
+	static final String DURATION = "duration";
+	static final String ENCLOSURE = "enclosure";
 
 	final URL url;
 
@@ -39,6 +64,29 @@ public class ParsePodcastFeed {
 		System.out.println("Banho");
 		int itemCount = 0;
 		try {
+			boolean isFeedHeader = true;
+			// Set header values intial to the empty string
+			String description = "";
+			String title = "";
+			String oldTitle = "";
+			String link = "";
+			String oldLink = "";
+			String language = "";
+			String copyright = "";
+			String author = "";
+			String pubDate = "";
+			String guid = "";
+			String url = "";
+			String oldUrl = "";
+			String lastBuildDate = "";
+			String width = "";
+			String height = "";
+			String subtitle = "";
+			ArrayList<String> category = new ArrayList<>();
+			ArrayList<String> categoryFeed = new ArrayList<>();
+			String summary = "";
+			String duration = "";
+			String enclosure = "";
 
 			// First create a new XMLInputFactory
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -46,137 +94,158 @@ public class ParsePodcastFeed {
 			InputStream in = read();
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 			// read the XML document
-			XMLEvent event = eventReader.nextEvent();
-			
-			while (eventReader.hasNext() && !(event.isStartElement() && getStartEventAsName(event).equals("channel"))) {
-				System.out.println("1");
-				event = eventReader.nextEvent();
-			}
-			event = eventReader.nextEvent();
-			
-			while (eventReader.hasNext() && !(event.isEndElement() && getEndEventAsName(event).equals("channel"))) {
-				System.out.println("2");
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
-
-					String name = getStartEventAsName(event);
-
-					Tag tag = readTag(event, eventReader);
-
-					if (name.equals("item")) {
-						itemCount++;
-						while((event.isStartElement() && getStartEventAsName(event).equals("item")) || (event.isCharacters() && getCharacterData(event).trim().isEmpty())){
-							event = eventReader.nextEvent();
+					String localPart = event.asStartElement().getName().getLocalPart();
+					switch (localPart) {
+					case ITEM:
+						if (isFeedHeader) {
+							isFeedHeader = false;
+							putValue(feed, TITLE, title);
+							putValue(feed, DESCRIPTION, description);
+							putValue(feed, LANGUAGE, language);
+							putValue(feed, COPYRIGHT, copyright);
+							putValue(feed, LINK, link);
+							putValue(feed, AUTHOR, author);
+							putValue(feed, URL, url);
+							putValue(feed, LAST_BUILD_DATE, lastBuildDate);
+							putValue(feed, SUBTITLE, subtitle);
+							if(feed.getTag(CATEGORY).getValue() == null){
+								feed.getTag(CATEGORY).setValue(new ArrayList<>());
+							}
+							feed.addAllTag(CATEGORY, categoryFeed);
+							category = new ArrayList<>();
+							putValue(feed, SUMMARY, summary);
 						}
+						event = eventReader.nextEvent();
+						break;
+					case TITLE:
+						title = getCharacterData(event, eventReader);
+						break;
+					case DESCRIPTION:
+						description = getCharacterData(event, eventReader);
+						break;
+					case LINK:
+						link = getCharacterData(event, eventReader);
+						break;
+					case GUID:
+						guid = getCharacterData(event, eventReader);
+						break;
+					case LANGUAGE:
+						language = getCharacterData(event, eventReader);
+						break;
+					case AUTHOR:
+						author = getCharacterData(event, eventReader);
+						break;
+					case PUB_DATE:
+						pubDate = getCharacterData(event, eventReader);
+						break;
+					case COPYRIGHT:
+						copyright = getCharacterData(event, eventReader);
+						break;
+					case URL:
+						url = getCharacterData(event, eventReader);
+						break;
+					case LAST_BUILD_DATE:
+						lastBuildDate = getCharacterData(event, eventReader);
+						break;
+					case WIDTH:
+						width = getCharacterData(event, eventReader);
+						break;
+					case HEIGHT:
+						height = getCharacterData(event, eventReader);
+						break;
+					case SUBTITLE:
+						subtitle = getCharacterData(event, eventReader);
+						break;
+					case CATEGORY:
+						if(event.asStartElement().getName().getPrefix().equals("itunes")){
+							categoryFeed.add(getAttribute(event, "text"));
+						}else{
+							category.add(getCharacterData(event, eventReader));
+						}
+						break;
+					case SUMMARY:
+						summary = getCharacterData(event, eventReader);
+						break;
+					case DURATION:
+						duration = getCharacterData(event, eventReader);
+						break;
+					case ENCLOSURE:
+						enclosure = getAttribute(event, URL);
+						break;
+					case IMAGE:
+						oldTitle = title;
+						oldLink = link;
+						oldUrl = url;
+						break;
+					}
+				} else if (event.isEndElement()) {
+					String endLocal = event.asEndElement().getName().getLocalPart();
+					if (endLocal == (ITEM)) {
 						Episode ep = new Episode();
 						ep.setTags(new HashMap<>());
-						while (eventReader.hasNext()) {
-							if (event.isStartElement()) {
-								String epTagName = getStartEventAsName(event);
-
-								Tag epTag = readTag(event, eventReader);
-								ep.putTag(epTagName, epTag);
-
-							}else if (event.isEndElement() && getEndEventAsName(event).equals("item")){
-								break;
-							}
-							event = eventReader.nextEvent();
+						putValue(ep, TITLE, title);
+						putValue(ep, DESCRIPTION, description);
+						putValue(ep, LINK, link);
+						putValue(ep, GUID, guid);
+						putValue(ep, URL, url);
+						putValue(ep, SUBTITLE, subtitle);
+						if(ep.getTag(CATEGORY).getValue() == null){
+							ep.getTag(CATEGORY).setValue(new ArrayList<>());
 						}
-
+						ep.addAllTag(CATEGORY, category);
+						category = new ArrayList<>();
+						putValue(ep, SUMMARY, summary);
+						putValue(ep, DURATION, duration);
+						putValue(ep, ENCLOSURE, enclosure);
+						putValue(ep, PUB_DATE, pubDate);
 						feed.addEpisode(ep);
+						continue;
+					} else if(endLocal == (IMAGE)){
+						Tag tg = new Tag();
+						tg.setTags(new HashMap<>());
+						putValue(tg, TITLE, title);
+						title = oldTitle;
+						putValue(tg, URL, url);
+						url = oldUrl;
+						putValue(tg, LINK, link);
+						link = oldLink;
+						putValue(tg, WIDTH, width);
+						putValue(tg, HEIGHT, height);
+						feed.putTag(IMAGE, tg);
 					}
-
-					feed.putTag(name, tag);
-
-				}
-				if(eventReader.hasNext()){
-					event = eventReader.nextEvent();
 				}
 			}
 		} catch (XMLStreamException e) {
 			throw new RuntimeException(e);
 		}
-		System.out.println("Item Count: " + itemCount);
 		return feed;
 	}
-
-	private String getStartEventAsName(XMLEvent evt) {
-		String name = "";
-		String prefix = evt.asStartElement().getName().getPrefix();
-		String localPart = evt.asStartElement().getName().getLocalPart();
-
-		if (!prefix.isEmpty()) {
-			name += prefix + ":";
+	
+	private void putValue(Tageable feed, String name, String value){
+		if(feed.getTag(name).getValue() == null){
+			feed.getTag(name).setValue(new ArrayList<>());
 		}
-
-		name += localPart;
-		return name;
+		feed.putTag(name, value);
 	}
 
-	private String getEndEventAsName(XMLEvent evt) {
-		String name = "";
-		String prefix = evt.asEndElement().getName().getPrefix();
-		String localPart = evt.asEndElement().getName().getLocalPart();
-
-		if (!prefix.isEmpty()) {
-			name += prefix + ":";
-		}
-
-		name += localPart;
-		return name;
-	}
-
-	private void readAttribute(Tag t, XMLEvent event) {
-
-		t.setAttributes(new HashMap<>());
-
-		Iterator attribute = event.asStartElement().getAttributes();
-
-		while (attribute.hasNext()) {
-			Attribute attr = (Attribute) attribute.next();
-			String value = attr.getValue();
+	private String getAttribute(XMLEvent event, String attributeName){
+		Iterator it = event.asStartElement().getAttributes();
+		while(it.hasNext()){
+			Attribute attr = (Attribute) it.next();
 			String name = attr.getName().getLocalPart();
-			t.putAttribute(name, value);
-		}
-		Iterator namespaces = event.asStartElement().getNamespaces();
-
-		while (namespaces.hasNext()) {
-			Namespace namesp = (Namespace) namespaces.next();
-			String name = namesp.getName().getPrefix() + ":" + namesp.getName().getLocalPart();
-			String value = namesp.getValue();
-			t.putAttribute(name, value);
-		}
-	}
-
-	private Tag readTag(XMLEvent evt, XMLEventReader eventReader) throws XMLStreamException {
-
-		Tag t = new Tag();
-		readAttribute(t, evt);
-		t.setTags(new HashMap<>());
-
-		while (eventReader.hasNext()) {
-			evt = eventReader.nextEvent();
-			if (evt.isStartElement()) {
-				t.putTag(getStartEventAsName(evt), readTag(evt, eventReader));
-			} else if (evt.isCharacters()) {
-				String s = getCharacterData(evt);
-				if (s.trim().isEmpty()) {
-					continue;
-				} else {
-					if(t.getValue() == null){
-						t.setValue(new ArrayList<>());
-					}
-					t.addValue(s);
-				}
-			} else if (evt.isEndElement()) {
-				break;
+			if(name == attributeName){
+				return attr.getValue();
 			}
 		}
-		return t;
-
+		return "";
 	}
 
-	private String getCharacterData(XMLEvent event) throws XMLStreamException {
+	private String getCharacterData(XMLEvent event, XMLEventReader eventReader) throws XMLStreamException {
 		String result = "";
+		event = eventReader.nextEvent();
 		if (event instanceof Characters) {
 			result = event.asCharacters().getData();
 		}

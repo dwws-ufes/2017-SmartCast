@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
 @Entity
-public class Podcast extends PersistentObjectSupport{
+public class Podcast extends PersistentObjectSupport implements Tageable{
 	
 	/**
 	 * 
@@ -27,8 +27,6 @@ public class Podcast extends PersistentObjectSupport{
 	@MapKeyColumn(name="tagname")
 	private Map<String, Tag> tags;
 	
-	private String url;
-
 	public List<Episode> getEpisodes() {
 		return episodes;
 	}
@@ -42,33 +40,35 @@ public class Podcast extends PersistentObjectSupport{
 		this.episodes.add(episode);
 	}
 
+	@Override
 	public Map<String, Tag> getTags() {
 		return tags;
 	}
 
+	@Override
 	public void setTags(Map<String, Tag> tags) {
 		this.tags = tags;
 	}
 
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	
+	@Override
 	public void putTag(String name, String value){
 		Tag t = new Tag();
 		t.addValue(value);
 		this.tags.put(name, t);
 	}
 	
+	@Override
 	public void putTag(String name, Tag t){
 		this.tags.put(name, t);
 	}
 	
+	@Override
 	public Tag getTag(String name){
 		return this.tags.get(name);
 	}
+	
+	@Override
+	public void addAllTag(String name, List<String> values) {
+		this.tags.get(name).getValue().addAll(values);
+	};
 }

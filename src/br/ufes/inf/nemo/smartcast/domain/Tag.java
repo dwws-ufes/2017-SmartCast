@@ -11,7 +11,7 @@ import javax.persistence.MapKeyColumn;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
 @Entity
-public class Tag extends PersistentObjectSupport {
+public class Tag extends PersistentObjectSupport implements Tageable{
 	
 	@ElementCollection
 	private List<String> value;
@@ -38,18 +38,22 @@ public class Tag extends PersistentObjectSupport {
 		this.value.add(value);
 	}
 
+	@Override
 	public Map<String, Tag> getTags() {
 		return tags;
 	}
 
+	@Override
 	public void setTags(Map<String, Tag> tags) {
 		this.tags = tags;
 	}
 
+	@Override
 	public void putTag(String name, Tag t){
 		this.tags.put(name, t);
 	}
 	
+	@Override
 	public void putTag(String name, String tagValue){
 		Tag tag = new Tag();
 		tag.addValue(tagValue);
@@ -67,4 +71,14 @@ public class Tag extends PersistentObjectSupport {
 	public void putAttribute(String name, String attribute){
 		this.attributes.put(name, attribute);
 	}
+
+	@Override
+	public Tag getTag(String name) {
+		return this.tags.get(name);
+	}
+	
+	@Override
+	public void addAllTag(String name, List<String> values) {
+		this.tags.get(name).getValue().addAll(values);
+	};
 }

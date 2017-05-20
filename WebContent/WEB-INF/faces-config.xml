@@ -6,21 +6,21 @@
 
 	<application>
 		<!-- Defines the resource bundle that contains the standard JSF messages (overriding the ones provided). -->
-		<message-bundle>br.ufes.inf.nemo.marvin.faces</message-bundle>
+		<message-bundle>br.ufes.inf.nemo.smartcast.faces</message-bundle>
 
 		<!-- Loads resource bundles for i18n messages and assigns names to them. -->
 		<resource-bundle>
-			<base-name>br.ufes.inf.nemo.marvin.messages</base-name>
-			<var>msgs</var>
+			<base-name>br.ufes.inf.nemo.smartcast.messages</base-name>
+			<var>smt</var>
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>br.ufes.inf.nemo.marvin.core.view.messages</base-name>
-			<var>msgsCore</var>
+			<base-name>br.ufes.inf.nemo.smartcast.view.messages</base-name>
+			<var>smtCast</var>
 		</resource-bundle>
 
 		<!-- Defines the default locale. -->
 		<locale-config>
-			<default-locale>en-US</default-locale>
+			<default-locale>pt_BR</default-locale>
 		</locale-config>
 	</application>
 

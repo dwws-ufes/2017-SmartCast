@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-05-19T09:09:23.132-0300")
+@Generated(value="Dali", date="2017-05-19T20:58:09.115-0300")
 @StaticMetamodel(Listener.class)
 public class Listener_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<Listener, String> email;

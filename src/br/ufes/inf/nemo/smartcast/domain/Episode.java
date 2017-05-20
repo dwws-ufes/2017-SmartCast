@@ -47,14 +47,16 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 	
 	@Override
 	public void putTag(String name, String value){
-		Tag t = new Tag();
-		t.addValue(value);
-		this.tags.put(name, t);
+		Tag tag = new Tag();
+		tag.addValue(value);
+		tag.setName(name);
+		this.tags.put(name, tag);
 	}
 	
 	@Override
-	public void putTag(String name, Tag t){
-		this.tags.put(name, t);
+	public void putTag(String name, Tag tag){
+		tag.setName(name);
+		this.tags.put(name, tag);
 	}
 	
 	@Override

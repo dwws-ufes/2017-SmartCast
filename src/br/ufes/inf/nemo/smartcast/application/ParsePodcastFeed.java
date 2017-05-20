@@ -12,11 +12,7 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.XMLEvent;
-
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-
 import javax.xml.stream.events.Attribute;
 
 import br.ufes.inf.nemo.smartcast.domain.Episode;
@@ -61,8 +57,6 @@ public class ParsePodcastFeed {
 		Podcast feed = new Podcast();
 		feed.setTags(new HashMap<>());
 		feed.setEpisodes(new ArrayList<>());
-		System.out.println("Banho");
-		int itemCount = 0;
 		try {
 			boolean isFeedHeader = true;
 			// Set header values intial to the empty string
@@ -111,11 +105,18 @@ public class ParsePodcastFeed {
 							putValue(feed, URL, url);
 							putValue(feed, LAST_BUILD_DATE, lastBuildDate);
 							putValue(feed, SUBTITLE, subtitle);
-							if(feed.getTag(CATEGORY).getValue() == null){
-								feed.getTag(CATEGORY).setValue(new ArrayList<>());
+							Tag cat;
+							if(feed.getTag(CATEGORY) == null){
+								cat = new Tag();
+								feed.putTag(CATEGORY, cat);
+							}else{
+								cat = feed.getTag(CATEGORY);
+							}
+							if(cat.getValue() == null){
+								cat.setValue(new ArrayList<>());
 							}
 							feed.addAllTag(CATEGORY, categoryFeed);
-							category = new ArrayList<>();
+							categoryFeed = new ArrayList<>();
 							putValue(feed, SUMMARY, summary);
 						}
 						event = eventReader.nextEvent();
@@ -192,8 +193,15 @@ public class ParsePodcastFeed {
 						putValue(ep, GUID, guid);
 						putValue(ep, URL, url);
 						putValue(ep, SUBTITLE, subtitle);
-						if(ep.getTag(CATEGORY).getValue() == null){
-							ep.getTag(CATEGORY).setValue(new ArrayList<>());
+						Tag cat;
+						if(ep.getTag(CATEGORY) == null){
+							cat = new Tag();
+							ep.putTag(CATEGORY, cat);
+						}else{
+							cat = ep.getTag(CATEGORY);
+						}
+						if(cat.getValue() == null){
+							cat.setValue(new ArrayList<>());
 						}
 						ep.addAllTag(CATEGORY, category);
 						category = new ArrayList<>();
@@ -225,10 +233,17 @@ public class ParsePodcastFeed {
 	}
 	
 	private void putValue(Tageable feed, String name, String value){
-		if(feed.getTag(name).getValue() == null){
-			feed.getTag(name).setValue(new ArrayList<>());
+		Tag t;
+		if(feed.getTag(name) == null){
+			t =  new Tag();
+			feed.putTag(name, t);
+		}else{
+			t = feed.getTag(name);
 		}
-		feed.putTag(name, value);
+		if(t.getValue() == null){
+			t.setValue(new ArrayList<>());
+		}
+		t.addValue(value);
 	}
 
 	private String getAttribute(XMLEvent event, String attributeName){

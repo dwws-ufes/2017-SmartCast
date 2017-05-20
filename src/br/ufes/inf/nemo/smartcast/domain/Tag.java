@@ -13,6 +13,8 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 @Entity
 public class Tag extends PersistentObjectSupport implements Tageable{
 	
+	private String name;
+	
 	@ElementCollection
 	private List<String> value;
 	
@@ -38,6 +40,14 @@ public class Tag extends PersistentObjectSupport implements Tageable{
 		this.value.add(value);
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public Map<String, Tag> getTags() {
 		return tags;
@@ -49,14 +59,16 @@ public class Tag extends PersistentObjectSupport implements Tageable{
 	}
 
 	@Override
-	public void putTag(String name, Tag t){
-		this.tags.put(name, t);
+	public void putTag(String name, Tag tag){
+		tag.setName(name);
+		this.tags.put(name, tag);
 	}
 	
 	@Override
 	public void putTag(String name, String tagValue){
 		Tag tag = new Tag();
 		tag.addValue(tagValue);
+		tag.setName(name);
 		this.tags.put(name, tag);
 	}
 	

@@ -1,26 +1,43 @@
 package br.ufes.inf.nemo.smartcast.application;
 
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import br.ufes.inf.nemo.jbutler.ejb.application.CrudServiceBean;
-import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseDAO;
 import br.ufes.inf.nemo.smartcast.domain.Podcast;
 import br.ufes.inf.nemo.smartcast.persistence.PodcastDAO;
 
 @Stateless
 @PermitAll
-public class ManagePodcastsServiceBean extends CrudServiceBean<Podcast> implements ManagePodcastsService {
+public class ManagePodcastsServiceBean implements ManagePodcastsService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8620191407659179440L;
+	/** Serialization id. */
+	private static final long serialVersionUID = 1L;
+
+	/** The logger. */
+	private static final Logger logger = Logger.getLogger(ManagePodcastsServiceBean.class.getCanonicalName());
+
 	@EJB private PodcastDAO podcastDao;
-
+	
 	@Override
-	public BaseDAO<Podcast> getDAO() {
-		return podcastDao;
+	public List<Podcast> search(String strg){
+		List<Podcast> result = new ArrayList<>();
+		try{
+			ParsePodcastFeed parser = new ParsePodcastFeed(strg);
+			Podcast podcast = parser.readFeed();
+			podcastDao.save(podcast);
+			result.add(podcast);
+		}catch (MalformedURLException e){
+			
+		}finally{
+			result.addAll(podcastDao.retrieveByTag(strg));
+		}
+		return result;
 	}
+	
 }

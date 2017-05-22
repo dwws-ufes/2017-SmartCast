@@ -55,7 +55,8 @@
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 	}
-
+/* Centralize row */
+	.i-am-centered { margin: auto; max-width: 300px;}
 /* Containers */
 
 	.container {

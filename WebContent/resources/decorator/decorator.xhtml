@@ -10,7 +10,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 		<link href="#{facesContext.externalContext.requestContextPath}/resources/decorator/assets/css/main.css" rel="stylesheet" type="text/css" />
-		<title>Teste</title>
+		<title><ui:insert name="title" /></title>
+		<ui:insert name="head" />
 	</h:head>
 	
 	<h:body>
@@ -18,25 +19,18 @@
 		<div id="header">
 			<div class="top">
 				<!-- Logo -->
-				<h:form id="logo"> 
-				<span class="image avatar48">
-					
-					<p:commandLink action="#{buttonLogin.buttonAction}" process="@this" >
-						<h:graphicImage value="resources/decorator/images/logopodcast.jpg"/>
-					</p:commandLink>
-							
-					
-				</span>
-				</h:form>
-			<!-- Nav -->
+				<div id="logo">
+					<a href="#{facesContext.externalContext.requestContextPath}/login/index.faces" id="logo-link"><span class="image avatar48"><img src="resources/decorator/images/logopodcast.jpg" alt="" /></span></a>
+					<h1 id="title">Jane Doe</h1>
+					<p>Hyperspace Engineer</p>
+				</div>
+				<!-- Nav -->
 				<div id="nav">
 					<ul>
-						
-					<!-- 	<script>window.history.pushState('Object', 'Categoria JavaScript', '#top')</script> -->	
-						<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Introdução</span></a></li>
-						<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Podcast</span></a></li>
-						<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Sobre </span></a></li>
-						<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contato</span></a></li>
+						<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Intro</span></a></li>
+						<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Portfolio</span></a></li>
+						<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
+						<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -52,70 +46,57 @@
 				</ul>
 			</div>
 		</div>
-
+		<h:form id="globalMessages">
+					<p:growl id="messages" globalOnly="true" showSummary="true" showDetail="true" sticky="true" />
+		</h:form>
 
 
 		 <!-- Main -->
-		<div id="main">
-			<!-- Intro -->
+		<div id="main">		
 			<section id="top" class="one dark cover">
-					<h:form>
-					
+			<ui:insert name="contents">
+				<div class="container">
 					<header>
-						<h2 class="alt">Insira seus dados para Efetuar o Login</h2>	
-					</header>
-					<div class="container">
-						<div class="i-am-centered">
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-4">
-									 	Email: <h:inputText id="email" required="true" value="#{listenerMB.listener.email}" pt:placeholder="Email"  /> 
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-4">
-										<p>Senha: <h:inputSecret id="password" value="#{listenerMB.listener.password}"  pt:placeholder="Senha" required="true" feedback="false" /></p> 
-			  									</div>
-			  								</div>	
-			  							</div>
-			  						</div>
-			  					
-			  					
-			  					<p><h:commandButton action="#{listenerMB.login}" value="Logar" /></p>
-			  					<p>Novo por aqui? Faça seu <h:commandLink action="#{registrationController.register}" value="Cadastro" />  </p>
-			  			</div>
-					</h:form>	
+						<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
+						site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
+						<p>Ligula scelerisque justo sem accumsan diam quis<br />
+						vitae natoque dictum sollicitudin elementum.</p>
+					</header>te
+		
+					<footer>
+						<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
+					</footer>
+		
+				</div>	
+			</ui:insert>		
+			</section>
+		
+			<section id="portfolio" class="two">
+						<div class="container">
+
+							<header>
+								<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
+								site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
+								<p>Ligula scelerisque justo sem accumsan diam quis<br />
+								vitae natoque dictum sollicitudin elementum.</p>
+							</header>
+
+							<footer>
+								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
+							</footer>
+
+						</div>
 			</section>
 
-
-
-
 			<!-- Portfolio -->
-			<section id="portfolio" class="two">
+			<section id="portfolio" class="three">
 				<div id="portfolio_area">
 					<ui:insert name="portfolio_area" >
 						<ui:include src="/resources/decorator/formPodcast.xhtml"/>
 					</ui:insert>
 				</div>	
-				
-			</section>
-				<!-- About Me -->
-					<section id="about" class="three">
-						<div class="container">
-							<header>
-								<h2>About Me</h2>
-							</header>
-							<a href="#" class="image featured"><h:graphicImage value="resources/decorator/images/pic08.jpg" alt="" /></a>
-							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
-							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
-							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
-							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
-							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
-							ornare iaculis.</p>
-						</div>
-					</section>
+			</section>	
+			
 				<!-- Contact -->
 					<section id="contact" class="four">
 						<div class="container">
@@ -137,8 +118,8 @@
 							</h:form>
 						</div>
 					</section>
+		
 		</div>
-
 		<!-- Footer -->
 		<div id="footer">
 			<!-- Copyright -->

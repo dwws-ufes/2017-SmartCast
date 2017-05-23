@@ -22,6 +22,7 @@ In the folder $WILDFLY_HOME/modules, create the following directory structure: c
 Unpack the MySQL Connector/J JDBC Driver you downloaded earlier and copy the file mysql-connector-java-5.1.41-bin.jar to the newly created folder $WILDFLY_HOME/modules/com/mysql/main. If you downloaded a different version of Connector/J, adjust the name accordingly;
 
 Still at $WILDFLY_HOME/modules/com/mysql/main, create a file named module.xml with the following contents (again if you downloaded a different version of Connector/J, adjust the name accordingly):
+
 ```html
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="urn:jboss:module:1.1" name="com.mysql">
@@ -34,8 +35,27 @@ Still at $WILDFLY_HOME/modules/com/mysql/main, create a file named module.xml wi
 </module>
 ```
 
+Now open the file $WILDFLY_HOME/standalone/configuration/standalone.xml and look for the tag <subsystem xmlns="urn:jboss:domain:datasources:4.0">. Inside this tag, locate <datasources> and then <drivers>. You should find the H2 Database driver configuration there. Next to it, add the configuration for MySQL Connector/J, as following:
 
-Installing
+```html
+<driver name="mysql" module="com.mysql">
+	<driver-class>com.mysql.jdbc.Driver</driver-class>
+</driver>
+```
+You should now be ready to develop a Java EE project in Eclipse, deploying it in WildFly and configuring it to use MySQL database for persistence. The above steps need to be done just once for all projects which will use these tools. In the next step we start Smartcast with some project-specific configurations.
+
+
+# Database creation and set-up
+We will use JPA (Java Persistence API), one of the Java EE standards, persisting our objects in a relational database stored in the MySQL server. We need, therefore, to:
+
+1. Create a database schema named smartcast;
+2. Create a database user named smartcast with password smartcat;
+3. Give user smartcast full permission for the schema marvin.
+To do that, use MySQL Workbench. Once you open it, connect to the server using the root user (the administrator). If you see an error message at the bottom of the screen indicating that a connection to the server could not be established, click on Server > Startup/Shutdown and click the button to start the server.
+
+To create the database, click the Create a new schema button in the toolbar. Fill in **smartcast** as Schema Name and select utf8 - default collation as Default Collation. Finally, click Apply and then Apply again to create the database schema.
+
+Next, click on Users and Privileges at the left-hand side of the Workbench's window and the Administration - Users and Privileges tab should open (see figure below). Click on the Add Account button and fill in the marvin user information like shown in the figure below (the password, which is hidden in the figure, should be marvin as well):
 
 With the SuggestionSpace folder uncompressed somewhere inside your computer go to eclipse and access file-> Open Projects to File System... and select the directory SuggestionSpace folder as import source
 

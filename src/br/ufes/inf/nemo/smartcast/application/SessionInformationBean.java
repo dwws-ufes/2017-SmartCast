@@ -43,6 +43,7 @@ public class SessionInformationBean implements SessionInformation {
 	/** @see br.org.feees.sigme.core.application.SessionInformation#getCurrentUser() */
 	@Override
 	public Listener getCurrentUser() {
+		System.out.println("Entrou");
 		return currentUser;
 	}
 

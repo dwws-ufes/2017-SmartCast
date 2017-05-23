@@ -12,8 +12,10 @@
       
     <ui:define name="contents">			
 		<header>
-			<h2 class="alt">Usuário logado com sucesso</h2>	
+			<h2 class="alt">Seja bem vindo <h:outputText value="#{sessionController.currentUser.userName}"/></h2>
+		<!-- 	 <p>Você está logado <h:outputText value="#{sessionController.loggedIn}"/> </p>	 -->
 		</header>
+			<p><p:commandButton id="button_logout" action="#{logoutServlet.service}" value="Logout"/></p>
 		
       </ui:define>	
 </ui:composition>

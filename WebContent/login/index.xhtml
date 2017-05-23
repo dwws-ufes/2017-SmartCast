@@ -20,7 +20,10 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-4">
-						 	Email: <h:inputText id="email" required="true" value="#{sessionController.email}" pt:placeholder="Email"  /> 
+						 	Email: <h:inputText id="email" required="true" value="#{sessionController.email}" pt:placeholder="Email" validatorMessage="Formato de email invalido">
+						 	    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+						 	    </h:inputText>
+						 	    <p:message for="email"/>
 						</div>
 					</div>
 				</div>
@@ -36,6 +39,17 @@
 	 					
 	 					<p><h:commandButton action="#{sessionController.login}" value="Logar" update=":globalMessages form"/></p>
 	 					<p>Novo por aqui? Faça seu <a href="#{facesContext.externalContext.requestContextPath}/registration/index.faces" id="registration-link">Cadastro</a></p>
+						Ou se preferir faça o Login através do 
+						<h:commandLink />
+									<a id="btn-login" href="#" class="btn btn-success"
+										style="margin-right: 10px;"> </a>
+									<h:commandLink action="#{usuarioBean.conectar()}"
+									styleClass="btn btn-primary" value="Login com Facebook"
+									rendered="#{empty usuarioBean.profile}" />			
+						<h:commandLink />
+
+									
+						 			
 	 			</div>
 	</h:form>  
       </ui:define>	

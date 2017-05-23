@@ -42,7 +42,8 @@ public class SessionController extends JSFController  {
 	/** Input: password for authentication. */
 	private String password;
 	
-	/** Getter for email. */
+	/** Getter for username. */
+
 	public String getEmail() {
 		System.out.println("Input Email");
 		return email;
@@ -72,8 +73,14 @@ public class SessionController extends JSFController  {
 	 * 
 	 * @return <code>true</code> if the user is logged in, <code>false</code> otherwise.
 	 */
-	public boolean isLoggedIn() {
-		return sessionInformation.getCurrentUser() != null;
+	public String getLoggedIn() {
+		if((sessionInformation.getCurrentUser()) == null){
+			return "/login/index.faces?faces-redirect=true";
+		}
+		else{
+			return "/login/sucess.xhtml?faces-redirect=true";	
+			
+		}
 	}
 
 	/**
@@ -153,6 +160,6 @@ public class SessionController extends JSFController  {
 		}
 
 		// If everything is OK, redirect back to the home screen.
-		return "/registration/sucess.xhtml?faces-redirect=true";
+		return "/login/sucess.xhtml?faces-redirect=true";
 	}
 }

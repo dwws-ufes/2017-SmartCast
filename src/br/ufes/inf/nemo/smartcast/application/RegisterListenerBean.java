@@ -67,6 +67,7 @@ public class RegisterListenerBean implements RegisterListenerService {
 			// Saves the administrator.
 			//logger.log(Level.FINER, "Persisting admin data...\n\t- Short name = {0}\n\t- Last update date = {1}", new Object[] { admin.getShortName(), admin.getLastUpdateDate() });
 			listenerDAO.save(admin);
+			
 			logger.log(Level.FINE, "The administrator has been saved: {0} ({1})", new Object[] {admin.getEmail() });
 
 			// Saves Marvin's configuration.

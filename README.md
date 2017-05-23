@@ -98,5 +98,6 @@ To make sure everything is in order before we actually start developing the appl
 
 # Authors
 
-**Joao Mario Soares Silva**
-**Pablo Brunetti dos Santos**
+@github/JMoicano
+
+@github/pablobrunetti

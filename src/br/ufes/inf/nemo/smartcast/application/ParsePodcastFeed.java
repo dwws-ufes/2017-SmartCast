@@ -44,19 +44,18 @@ public class ParsePodcastFeed {
 	static final String ENCLOSURE = "enclosure";
 
 	final URL url;
+	final String feedUrl;
 
-	public ParsePodcastFeed(String feedUrl) {
-		try {
-			this.url = new URL(feedUrl);
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
+	public ParsePodcastFeed(String feedUrl) throws MalformedURLException {
+		this.url = new URL(feedUrl);
+		this.feedUrl = feedUrl;
 	}
 
 	public Podcast readFeed() {
 		Podcast feed = new Podcast();
 		feed.setTags(new HashMap<>());
 		feed.setEpisodes(new ArrayList<>());
+		feed.setUrl(this.feedUrl);
 		try {
 			boolean isFeedHeader = true;
 			// Set header values intial to the empty string
@@ -106,13 +105,13 @@ public class ParsePodcastFeed {
 							putValue(feed, LAST_BUILD_DATE, lastBuildDate);
 							putValue(feed, SUBTITLE, subtitle);
 							Tag cat;
-							if(feed.getTag(CATEGORY) == null){
+							if (feed.getTag(CATEGORY) == null) {
 								cat = new Tag();
 								feed.putTag(CATEGORY, cat);
-							}else{
+							} else {
 								cat = feed.getTag(CATEGORY);
 							}
-							if(cat.getValue() == null){
+							if (cat.getValue() == null) {
 								cat.setValue(new ArrayList<>());
 							}
 							feed.addAllTag(CATEGORY, categoryFeed);
@@ -161,9 +160,9 @@ public class ParsePodcastFeed {
 						subtitle = getCharacterData(event, eventReader);
 						break;
 					case CATEGORY:
-						if(event.asStartElement().getName().getPrefix().equals("itunes")){
+						if (event.asStartElement().getName().getPrefix().equals("itunes")) {
 							categoryFeed.add(getAttribute(event, "text"));
-						}else{
+						} else {
 							category.add(getCharacterData(event, eventReader));
 						}
 						break;
@@ -194,13 +193,13 @@ public class ParsePodcastFeed {
 						putValue(ep, URL, url);
 						putValue(ep, SUBTITLE, subtitle);
 						Tag cat;
-						if(ep.getTag(CATEGORY) == null){
+						if (ep.getTag(CATEGORY) == null) {
 							cat = new Tag();
 							ep.putTag(CATEGORY, cat);
-						}else{
+						} else {
 							cat = ep.getTag(CATEGORY);
 						}
-						if(cat.getValue() == null){
+						if (cat.getValue() == null) {
 							cat.setValue(new ArrayList<>());
 						}
 						ep.addAllTag(CATEGORY, category);
@@ -211,7 +210,7 @@ public class ParsePodcastFeed {
 						putValue(ep, PUB_DATE, pubDate);
 						feed.addEpisode(ep);
 						continue;
-					} else if(endLocal == (IMAGE)){
+					} else if (endLocal == (IMAGE)) {
 						Tag tg = new Tag();
 						tg.setTags(new HashMap<>());
 						putValue(tg, TITLE, title);
@@ -231,27 +230,27 @@ public class ParsePodcastFeed {
 		}
 		return feed;
 	}
-	
-	private void putValue(Tageable feed, String name, String value){
+
+	private void putValue(Tageable feed, String name, String value) {
 		Tag t;
-		if(feed.getTag(name) == null){
-			t =  new Tag();
+		if (feed.getTag(name) == null) {
+			t = new Tag();
 			feed.putTag(name, t);
-		}else{
+		} else {
 			t = feed.getTag(name);
 		}
-		if(t.getValue() == null){
+		if (t.getValue() == null) {
 			t.setValue(new ArrayList<>());
 		}
 		t.addValue(value);
 	}
 
-	private String getAttribute(XMLEvent event, String attributeName){
+	private String getAttribute(XMLEvent event, String attributeName) {
 		Iterator it = event.asStartElement().getAttributes();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			Attribute attr = (Attribute) it.next();
 			String name = attr.getName().getLocalPart();
-			if(name == attributeName){
+			if (name == attributeName) {
 				return attr.getValue();
 			}
 		}

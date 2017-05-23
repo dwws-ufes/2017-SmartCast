@@ -17,4 +17,7 @@ public interface PodcastDAO extends BaseDAO<Podcast>{
 	
 	public List<Podcast> retrieveByTag(Tag tag);
 	
+	public int countByURL(String url);
+	
+	public Podcast retrieveByURL(String url);
 }

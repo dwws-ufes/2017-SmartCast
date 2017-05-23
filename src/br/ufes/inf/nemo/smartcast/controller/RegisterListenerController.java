@@ -107,7 +107,7 @@ public class RegisterListenerController extends JSFController {
 	private boolean checkPasswords() {
 		if (((repeatPassword != null) && (!repeatPassword.equals(admin.getPassword()))) || ((repeatPassword == null) && (admin.getPassword() != null))) {
 			logger.log(Level.INFO, "Password and repeated password are not the same");
-			addGlobalI18nMessage("msgsCore", FacesMessage.SEVERITY_WARN, "installSystem.error.passwordsDontMatch.summary", "installSystem.error.passwordsDontMatch.detail");
+			addGlobalI18nMessage("smtCast", FacesMessage.SEVERITY_WARN, "installSystem.error.passwordsDontMatch.summary", "installSystem.error.passwordsDontMatch.detail");
 			return false;
 		}
 		return true;
@@ -156,6 +156,9 @@ public class RegisterListenerController extends JSFController {
 		// Check if passwords don't match. Add an error in that case.
 		if (!checkPasswords()) return null;
 	    System.out.println("Senhas conferem");
+	    if (!conversation.isTransient()) conversation.end();
+		conversation.begin();
+
 	//	logger.log(Level.FINEST, "Previously received data:\n\t- admin.name = {0}\n\t- admin.email = {1}", new Object[] { admin.getName(), admin.getEmail() });
 	//	logger.log(Level.FINEST, "Received input data:\n\t- config.institutionAcronym = {0}", config.getInstitutionAcronym());
 
@@ -167,7 +170,7 @@ public class RegisterListenerController extends JSFController {
 		}
 		catch (SystemInstallFailedException e) {
 			logger.log(Level.SEVERE, "System installation threw exception", e);
-			addGlobalI18nMessage("msgsCore", FacesMessage.SEVERITY_FATAL, "installSystem.error.installFailed.summary", "installSystem.error.installFailed.detail");
+			addGlobalI18nMessage("smtCast", FacesMessage.SEVERITY_FATAL, "installSystem.error.installFailed.summary", "installSystem.error.installFailed.detail");
 			return null;
 		}
 
@@ -175,6 +178,6 @@ public class RegisterListenerController extends JSFController {
 		conversation.end();
 
 		// Proceeds to the final view.
-		return VIEW_PATH + "done.xhtml?faces-redirect=true";
+		return "/registration/done.xhtml?faces-redirect=true";
 	}
 }

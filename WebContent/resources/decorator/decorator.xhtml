@@ -19,17 +19,20 @@
 		<div id="header">
 			<div class="top">
 				<!-- Logo -->
-				<div id="logo">
-					<a href="#{facesContext.externalContext.requestContextPath}/login/index.faces" id="logo-link"><span class="image avatar48"><img src="resources/decorator/images/logopodcast.jpg" alt="" /></span></a>
-					<h1 id="title">Jane Doe</h1>
-					<p>Hyperspace Engineer</p>
-				</div>
+				<h:form id="logo"> 
+				<span class="image avatar48">	
+					<p:commandLink id="logo-link" action="#{sessionController.getLoggedIn}" immediate="true">   
+						<h:graphicImage value="resources/decorator/images/logopodcast.jpg"/>   
+					</p:commandLink>
+					</span>
+					<h1 id="title"><h:outputText value="#{sessionController.currentUser.userName}"/></h1>
+					<p>Usuário</p>
+				</h:form>
 				<!-- Nav -->
 				<div id="nav">
 					<ul>
 						<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Intro</span></a></li>
 						<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Portfolio</span></a></li>
-						<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
 						<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
 					</ul>
 				</div>
@@ -55,41 +58,13 @@
 		<div id="main">		
 			<section id="top" class="one dark cover">
 			<ui:insert name="contents">
-				<div class="container">
-					<header>
-						<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
-						site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
-						<p>Ligula scelerisque justo sem accumsan diam quis<br />
-						vitae natoque dictum sollicitudin elementum.</p>
-					</header>te
-		
-					<footer>
-						<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
-					</footer>
-		
-				</div>	
+			
 			</ui:insert>		
 			</section>
 		
-			<section id="portfolio" class="two">
-						<div class="container">
-
-							<header>
-								<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
-								site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
-								<p>Ligula scelerisque justo sem accumsan diam quis<br />
-								vitae natoque dictum sollicitudin elementum.</p>
-							</header>
-
-							<footer>
-								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
-							</footer>
-
-						</div>
-			</section>
 
 			<!-- Portfolio -->
-			<section id="portfolio" class="three">
+			<section id="portfolio" class="two">
 				<div id="portfolio_area">
 					<ui:insert name="portfolio_area" >
 						<ui:include src="/resources/decorator/formPodcast.xhtml"/>
@@ -106,13 +81,13 @@
 							<p>Preencha os campos abaixo e entre em contato conosco. A Smartcast irá tirar todas as suas dúvidas.</p>
 							<h:form method="post" action="#">
 								<div class="row">
-									<div class="6u 12u$(mobile)"><h:inputText value="#{bean.name}" pt:placeholder="Nome"/></div>
-									<div class="6u$ 12u$(mobile)"><h:inputText value="#{bean.email}" pt:placeholder="Email"/></div>
+									<div class="6u 12u$(mobile)"><h:inputText value="#{sendEmail.nome}" pt:placeholder="Nome"/></div>
+									<div class="6u$ 12u$(mobile)"><h:inputText value="#{sendEmail.fieldEmail}" pt:placeholder="Email"/></div>
 									<div class="12u$">
-										<h:inputTextarea name="message" pt:placeholder="Mensagem"/>
+										<h:inputTextarea name="message" value="#{sendEmail.mensagem}" pt:placeholder="Mensagem"/>
 									</div>
 									<div class="12u$">
-										<input type="submit" value="Send Message" />
+										<p><h:commandButton action="#{sendEmail.sendEmail}" value="Enviar Mensagem" update=":globalMessages form"/></p>
 									</div>
 								</div>
 							</h:form>

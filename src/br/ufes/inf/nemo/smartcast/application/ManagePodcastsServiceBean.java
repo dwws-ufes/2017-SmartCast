@@ -1,26 +1,55 @@
 package br.ufes.inf.nemo.smartcast.application;
 
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import br.ufes.inf.nemo.jbutler.ejb.application.CrudServiceBean;
-import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseDAO;
 import br.ufes.inf.nemo.smartcast.domain.Podcast;
 import br.ufes.inf.nemo.smartcast.persistence.PodcastDAO;
 
 @Stateless
 @PermitAll
-public class ManagePodcastsServiceBean extends CrudServiceBean<Podcast> implements ManagePodcastsService {
+public class ManagePodcastsServiceBean implements ManagePodcastsService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8620191407659179440L;
-	@EJB private PodcastDAO podcastDao;
+	/** Serialization id. */
+	private static final long serialVersionUID = 1L;
 
-	@Override
-	public BaseDAO<Podcast> getDAO() {
-		return podcastDao;
+	/** The logger. */
+	private static final Logger logger = Logger.getLogger(ManagePodcastsServiceBean.class.getCanonicalName());
+
+	@EJB
+	private PodcastDAO podcastDao;
+
+	public List<Podcast> getSome(){
+		int size = (int) podcastDao.retrieveCount();
+		int interval[] = {0,Integer.min(size, 6)};
+		
+		return podcastDao.retrieveSome(interval);
 	}
+	
+	@Override
+	public List<Podcast> search(String strg) {
+		List<Podcast> result = new ArrayList<>();
+		try {
+			if (podcastDao.countByURL(strg) == 0) {
+				System.out.println("antes");
+				ParsePodcastFeed parser = new ParsePodcastFeed(strg);
+				Podcast podcast = parser.readFeed();
+				System.out.println("depois");
+				podcastDao.save(podcast);
+			}
+			result.add(podcastDao.retrieveByURL(strg));
+		} catch (MalformedURLException e) {
+
+		} finally {
+//			result.addAll(podcastDao.retrieveByTag(strg));
+		}
+		return result;
+	}
+
 }

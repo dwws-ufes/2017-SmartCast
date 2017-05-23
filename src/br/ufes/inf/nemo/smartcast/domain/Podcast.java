@@ -27,8 +27,18 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	@MapKeyColumn(name="tagname")
 	private Map<String, Tag> tags;
 	
+	private String url;
+	
 	public List<Episode> getEpisodes() {
 		return episodes;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public void setEpisodes(List<Episode> episodes) {

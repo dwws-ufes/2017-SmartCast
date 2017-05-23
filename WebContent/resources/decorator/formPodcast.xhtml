@@ -4,18 +4,24 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
  
 		<div class="container">
 					<header>
-						<h2>Portfolio</h2>
+						<h2>Podcasts</h2>
 					</header>
-						<p>Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-						egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-						Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-						fusce hendrerit lacus ridiculus.</p>
-						<div class="row">
+						<h:form id ="listPodcasts">
+						<h:panelGroup id ="listPodcastsPanel">
+							<p>
+								<h:inputText id="search" value ="#{managePodcastsController.searchString}"/>
+								<p:commandButton value="search"  action="#{managePodcastsController.reloadPodcast()}"/>
+								
+							</p>
+							</h:panelGroup>
+						</h:form>
+						<!-- div class="row">
 							<div class="4u 12u$(mobile)">
 								<article class="item">
 									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic02.jpg" alt="" /></a>
@@ -58,7 +64,7 @@
 									</header>
 								</article>
 							</div>
-						</div>
+						</div> -->
 				</div>
  
 

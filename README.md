@@ -22,7 +22,7 @@ In the folder $WILDFLY_HOME/modules, create the following directory structure: c
 Unpack the MySQL Connector/J JDBC Driver you downloaded earlier and copy the file mysql-connector-java-5.1.41-bin.jar to the newly created folder $WILDFLY_HOME/modules/com/mysql/main. If you downloaded a different version of Connector/J, adjust the name accordingly;
 
 Still at $WILDFLY_HOME/modules/com/mysql/main, create a file named module.xml with the following contents (again if you downloaded a different version of Connector/J, adjust the name accordingly):
-```java
+```html
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="urn:jboss:module:1.1" name="com.mysql">
 	<resources>

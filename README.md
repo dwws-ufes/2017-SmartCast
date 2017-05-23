@@ -50,7 +50,7 @@ We will use JPA (Java Persistence API), one of the Java EE standards, persisting
 
 1. Create a database schema named **smartcast**;
 2. Create a database user named smartcast with password smartcat;
-3. Give user smartcast full permission for the schema **marvin**.
+3. Give user smartcast full permission for the schema **smartcast**.
 
 To do that, use MySQL Workbench. Once you open it, connect to the server using the root user (the administrator). If you see an error message at the bottom of the screen indicating that a connection to the server could not be established, click on Server > Startup/Shutdown and click the button to start the server.
 
@@ -68,15 +68,15 @@ You can now close MySQL Workbench.
 
 While we could configure JPA to connect to the database we have just created in a configuration file in our project, creating a datasource for it in WildFly allows us to use JTA (Java Transaction API), another standard from Java EE, which provides us with automatic transaction management.
 
-To create a JTA datasource for **Smartcast** in WildFly, open the file **$WILDFLY_HOME/standalone/configuration/standalone.xml** and look for the tag <subsystem xmlns="urn:jboss:domain:datasources:4.0">. Inside this tag, there is a <datasources> tag which holds the configuration for the java:jboss/datasources/ExampleDS datasource that WildFly comes with. Next to it, add a datasource for the marvin database in MySQL:
+To create a JTA datasource for **Smartcast** in WildFly, open the file **$WILDFLY_HOME/standalone/configuration/standalone.xml** and look for the tag <subsystem xmlns="urn:jboss:domain:datasources:4.0">. Inside this tag, there is a <datasources> tag which holds the configuration for the java:jboss/datasources/ExampleDS datasource that WildFly comes with. Next to it, add a datasource for the smartcast database in MySQL:
 
 ```html
-<datasource jta="true" jndi-name="java:jboss/datasources/Marvin" pool-name="MarvinPool" enabled="true" use-java-context="true">
-    <connection-url>jdbc:mysql://localhost:3306/marvin</connection-url>
+<datasource jta="true" jndi-name="java:jboss/datasources/Smartcast" pool-name="SmartcastPool" enabled="true" use-java-context="true">
+    <connection-url>jdbc:mysql://localhost:3306/smartcast</connection-url>
     <driver>mysql</driver>
     <security>
-        <user-name>marvin</user-name>
-        <password>marvin</password>
+        <user-name>smartcast</user-name>
+        <password>smartcast</password>
     </security>
 </datasource>
 ```
@@ -85,9 +85,18 @@ Import Projects from Git: in Eclipse, click on the File > Import > Project from 
 
 Everything should be error-free at this point and if you open Java Resources > Libraries > Maven Dependencies you should see some JARs: primefaces-6.1.jar, bootstrap-1.0.10.jar and jbutler-wp-1.2.4.jar (versions may vary if these components are updated after this tutorial was written).
 
-If you want, you can delete the choose_remote_name/master branch by right-clicking on it under Marvin > Branches > Remote Tracking at the Git Repositories view and selecting Delete Branch. Also, it makes sense to delete or to edit the README.md file, which was fetched from the base project and may cause confusion if you send this new project to a GitHub repository...
+If you want, you can delete the choose_remote_name/master branch by right-clicking on it under Smartcast > Branches > Remote Tracking at the Git Repositories view and selecting Delete Branch. Also, it makes sense to delete or to edit the README.md file, which was fetched from the base project and may cause confusion if you send this new project to a GitHub repository...
 
-You might also want to make sure that the **<wb-module deploy-name="">** tag in .settings/org.eclipse.wst.common.component contains the same name as the context root of your WebApp. It may contain a version suffix (e.g., Smartcast-1.2.4), so remove it (e.g., make it Marvin).
+You might also want to make sure that the **<wb-module deploy-name="">** tag in .settings/org.eclipse.wst.common.component contains the same name as the context root of your WebApp. It may contain a version suffix (e.g., Smartcast-1.2.4), so remove it (e.g., make it Smartcast).
+
+# Testing the application
+To make sure everything is in order before we actually start developing the application, deploy and test it:
+
+1. Open the Servers view, right-click the WildFly server and choose Add and Remove.... Move the Smartcast project from the Available list to the Configured list and click Finish;
+
+2. Make sure the MySQL server is already started, start the WildFly server and open http://localhost:8080/Smartcast/ -- the initial screen should be shown, as in the figure below;
+
+
 
 
 

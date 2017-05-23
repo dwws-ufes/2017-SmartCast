@@ -96,12 +96,7 @@ To make sure everything is in order before we actually start developing the appl
 
 2. Make sure the MySQL server is already started, start the WildFly server and open http://localhost:8080/Smartcast/ -- the initial screen should be shown, as in the figure below;
 
-
-
-
-
-
-
 # Authors
-@github/JMoicano
-@github/pablobrunetti
+
+**Joao Mario Soares Silva**
+**Pablo Brunetti dos Santos**

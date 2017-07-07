@@ -51,9 +51,20 @@ public class TagJPADAO extends BaseJPADAO<Tag> implements TagDAO {
 	}
 
 	@Override
-	public List<Tag> retrieveByValue(String value) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Tag> retrieveByValue(String value) { //TODO: Test this
+		logger.log(Level.FINE, "Retrieving the tags wich contains the value \"{0}\"...", new Object[] { value });
+
+		// Constructs the query over the Tag class.
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+		Root<Tag> root = cq.from(Tag.class);
+
+		// Filters the query with the name.
+		cq.where(cb.isMember(value, root.get(Tag_.value)));
+		List<Tag> result = entityManager.createQuery(cq).getResultList();
+		logger.log(Level.INFO, "Retrieve the tags wich name is \"{0}\" returned {1} results.",
+				new Object[] { value, result.size() });
+		return result;
 	}
 
 }

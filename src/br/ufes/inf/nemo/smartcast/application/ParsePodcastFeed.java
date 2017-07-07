@@ -53,7 +53,7 @@ public class ParsePodcastFeed {
 
 	public Podcast readFeed() {
 		Podcast feed = new Podcast();
-		feed.setTags(new HashMap<>());
+		feed.setTags(new ArrayList<>());
 		feed.setEpisodes(new ArrayList<>());
 		feed.setUrl(this.feedUrl);
 		try {
@@ -107,7 +107,8 @@ public class ParsePodcastFeed {
 							Tag cat;
 							if (feed.getTag(CATEGORY) == null) {
 								cat = new Tag();
-								feed.putTag(CATEGORY, cat);
+								cat.setName(CATEGORY);
+								feed.putTag(cat);
 							} else {
 								cat = feed.getTag(CATEGORY);
 							}
@@ -185,7 +186,7 @@ public class ParsePodcastFeed {
 					String endLocal = event.asEndElement().getName().getLocalPart();
 					if (endLocal == (ITEM)) {
 						Episode ep = new Episode();
-						ep.setTags(new HashMap<>());
+						ep.setTags(new ArrayList<>());
 						putValue(ep, TITLE, title);
 						putValue(ep, DESCRIPTION, description);
 						putValue(ep, LINK, link);
@@ -195,7 +196,8 @@ public class ParsePodcastFeed {
 						Tag cat;
 						if (ep.getTag(CATEGORY) == null) {
 							cat = new Tag();
-							ep.putTag(CATEGORY, cat);
+							cat.setName(CATEGORY);
+							ep.putTag(cat);
 						} else {
 							cat = ep.getTag(CATEGORY);
 						}
@@ -212,7 +214,7 @@ public class ParsePodcastFeed {
 						continue;
 					} else if (endLocal == (IMAGE)) {
 						Tag tg = new Tag();
-						tg.setTags(new HashMap<>());
+						tg.setTags(new ArrayList<>());
 						putValue(tg, TITLE, title);
 						title = oldTitle;
 						putValue(tg, URL, url);
@@ -221,7 +223,8 @@ public class ParsePodcastFeed {
 						link = oldLink;
 						putValue(tg, WIDTH, width);
 						putValue(tg, HEIGHT, height);
-						feed.putTag(IMAGE, tg);
+						tg.setName(IMAGE);
+						feed.putTag(tg);
 					}
 				}
 			}
@@ -235,7 +238,8 @@ public class ParsePodcastFeed {
 		Tag t;
 		if (feed.getTag(name) == null) {
 			t = new Tag();
-			feed.putTag(name, t);
+			t.setName(name);
+			feed.putTag(t);
 		} else {
 			t = feed.getTag(name);
 		}

@@ -1,5 +1,6 @@
 package br.ufes.inf.nemo.smartcast.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.CollectionTable;
@@ -22,10 +23,8 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 	@ManyToOne
 	private Podcast podcast;
 	
-	@ElementCollection
-	@CollectionTable(name="episode_tag")
-	@MapKeyColumn(name="tagname")
-	private Map<String, Tag> tags;
+	@OneToMany
+	private List<Tag> tags;
 
 	public Podcast getPodcast() {
 		return podcast;
@@ -36,36 +35,49 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 	}
 
 	@Override
-	public Map<String, Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
 	@Override
-	public void setTags(Map<String, Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-	
+
 	@Override
-	public void putTag(String name, String value){
-		Tag tag = new Tag();
-		tag.addValue(value);
-		tag.setName(name);
-		this.tags.put(name, tag);
+	public void putTag(Tag tag){
+		this.tags.add(tag);
 	}
 	
 	@Override
-	public void putTag(String name, Tag tag){
+	public void putTag(String name, String tagValue){
+		Tag tag = new Tag();
+		tag.setValue(new ArrayList<>());
+		tag.addValue(tagValue);
 		tag.setName(name);
-		this.tags.put(name, tag);
+		this.tags.add(tag);
 	}
 	
 	@Override
 	public Tag getTag(String name){
-		return this.tags.get(name);
+		Tag t = null;
+		for (Tag tag : tags) {
+			if(tag.getName().equals(name)){
+				t = tag;
+				break;
+			}
+		}
+		return t;
 	}
 	
 	@Override
 	public void addAllTag(String name, List<String> values) {
-		this.tags.get(name).getValue().addAll(values);
-	};
+		Tag t = new Tag();
+		t.setName(name);
+		t.setValue(new ArrayList<>());
+		for (String string : values) {
+			t.addValue(string);
+			this.tags.add(t);
+		}
+	}
 }

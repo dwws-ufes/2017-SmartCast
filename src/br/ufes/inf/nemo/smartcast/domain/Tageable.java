@@ -5,13 +5,13 @@ import java.util.Map;
 
 public interface Tageable {
 	
-	public Map<String, Tag> getTags();
+	public List<Tag> getTags();
 
-	public void setTags(Map<String, Tag> tags);
+	public void setTags(List<Tag> tags);
 	
 	public void putTag(String name, String value);
 	
-	public void putTag(String name, Tag t);
+	public void putTag(Tag t);
 	
 	public Tag getTag(String name);
 	

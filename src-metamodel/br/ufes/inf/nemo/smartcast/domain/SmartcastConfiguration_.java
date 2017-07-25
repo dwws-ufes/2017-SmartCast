@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-07-06T17:51:14.100-0300")
+@Generated(value="Dali", date="2017-07-13T15:17:39.632-0300")
 @StaticMetamodel(SmartcastConfiguration.class)
 public class SmartcastConfiguration_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<SmartcastConfiguration, Date> creationDate;

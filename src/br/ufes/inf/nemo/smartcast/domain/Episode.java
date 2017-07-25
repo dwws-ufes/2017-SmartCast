@@ -3,6 +3,8 @@ package br.ufes.inf.nemo.smartcast.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 	@ManyToOne
 	private Podcast podcast;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 
 	public Podcast getPodcast() {

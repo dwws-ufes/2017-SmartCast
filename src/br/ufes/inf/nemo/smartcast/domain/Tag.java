@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Tag extends PersistentObjectSupport implements Tageable{
 	@ElementCollection
 	private List<String> value;
 	
-	@OneToMany(mappedBy = "rootTag")
+	@OneToMany(mappedBy = "rootTag", cascade = CascadeType.ALL)
 	private List<Tag> tags;
 	
 	@ManyToOne

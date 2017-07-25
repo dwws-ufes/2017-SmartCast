@@ -37,10 +37,8 @@ public class ManagePodcastsServiceBean implements ManagePodcastsService {
 		List<Podcast> result = new ArrayList<>();
 		try {
 			if (podcastDao.countByURL(strg) == 0) {
-				System.out.println("antes");
 				ParsePodcastFeed parser = new ParsePodcastFeed(strg);
 				Podcast podcast = parser.readFeed();
-				System.out.println("depois");
 				podcastDao.save(podcast);
 			}
 			result.add(podcastDao.retrieveByURL(strg));

@@ -23,7 +23,7 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	@OneToMany(mappedBy = "podcast",cascade = CascadeType.ALL)
 	private List<Episode> episodes;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 	
 	private String url;

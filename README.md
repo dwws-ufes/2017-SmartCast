@@ -42,21 +42,21 @@ Now open the file $WILDFLY_HOME/standalone/configuration/standalone.xml and look
 	<driver-class>com.mysql.jdbc.Driver</driver-class>
 </driver>
 ```
-You should now be ready to develop a Java EE project in Eclipse, deploying it in WildFly and configuring it to use MySQL database for persistence. The above steps need to be done just once for all projects which will use these tools. In the next step we start **Smartcast** with some project-specific configurations.
+You should now be ready to develop a Java EE project in Eclipse, deploying it in WildFly and configuring it to use MySQL database for persistence. The above steps need to be done just once for all projects which will use these tools. In the next step we start **SmartCast** with some project-specific configurations.
 
 
 # Database creation and set-up
 We will use JPA (Java Persistence API), one of the Java EE standards, persisting our objects in a relational database stored in the MySQL server. We need, therefore, to:
 
-1. Create a database schema named **smartcast**;
-2. Create a database user named smartcast with password smartcat;
-3. Give user smartcast full permission for the schema **smartcast**.
+1. Create a database schema named **SmartCast**;
+2. Create a database user named SmartCast with password smartcat;
+3. Give user SmartCast full permission for the schema **SmartCast**.
 
 To do that, use MySQL Workbench. Once you open it, connect to the server using the root user (the administrator). If you see an error message at the bottom of the screen indicating that a connection to the server could not be established, click on Server > Startup/Shutdown and click the button to start the server.
 
-To create the database, click the Create a new schema button in the toolbar. Fill in **smartcast** as Schema Name and select utf8 - default collation as Default Collation. Finally, click Apply and then Apply again to create the database schema.
+To create the database, click the Create a new schema button in the toolbar. Fill in **SmartCast** as Schema Name and select utf8 - default collation as Default Collation. Finally, click Apply and then Apply again to create the database schema.
 
-Next, click on Users and Privileges at the left-hand side of the Workbench's window and the Administration - Users and Privileges tab should open. Click on the Add Account button and fill in the **smartcast** user information.
+Next, click on Users and Privileges at the left-hand side of the Workbench's window and the Administration - Users and Privileges tab should open. Click on the Add Account button and fill in the **SmartCast** user information.
 
 With the SuggestionSpace folder uncompressed somewhere inside your computer go to eclipse and access file-> Open Projects to File System... and select the directory SuggestionSpace folder as import source
 
@@ -68,15 +68,15 @@ You can now close MySQL Workbench.
 
 While we could configure JPA to connect to the database we have just created in a configuration file in our project, creating a datasource for it in WildFly allows us to use JTA (Java Transaction API), another standard from Java EE, which provides us with automatic transaction management.
 
-To create a JTA datasource for **Smartcast** in WildFly, open the file **$WILDFLY_HOME/standalone/configuration/standalone.xml** and look for the tag <subsystem xmlns="urn:jboss:domain:datasources:4.0">. Inside this tag, there is a <datasources> tag which holds the configuration for the java:jboss/datasources/ExampleDS datasource that WildFly comes with. Next to it, add a datasource for the smartcast database in MySQL:
+To create a JTA datasource for **SmartCast** in WildFly, open the file **$WILDFLY_HOME/standalone/configuration/standalone.xml** and look for the tag <subsystem xmlns="urn:jboss:domain:datasources:4.0">. Inside this tag, there is a <datasources> tag which holds the configuration for the java:jboss/datasources/ExampleDS datasource that WildFly comes with. Next to it, add a datasource for the SmartCast database in MySQL:
 
 ```html
-<datasource jta="true" jndi-name="java:jboss/datasources/Smartcast" pool-name="SmartcastPool" enabled="true" use-java-context="true">
-    <connection-url>jdbc:mysql://localhost:3306/smartcast</connection-url>
+<datasource jta="true" jndi-name="java:jboss/datasources/SmartCast" pool-name="SmartCastPool" enabled="true" use-java-context="true">
+    <connection-url>jdbc:mysql://localhost:3306/SmartCast</connection-url>
     <driver>mysql</driver>
     <security>
-        <user-name>smartcast</user-name>
-        <password>smartcast</password>
+        <user-name>SmartCast</user-name>
+        <password>SmartCast</password>
     </security>
 </datasource>
 ```

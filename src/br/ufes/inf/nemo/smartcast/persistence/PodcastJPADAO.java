@@ -26,7 +26,7 @@ public class PodcastJPADAO extends BaseJPADAO<Podcast> implements PodcastDAO {
 	private static final long serialVersionUID = 1L;
 	
 	/** The logger. */
-	private static final Logger logger = Logger.getLogger(TagJPADAO.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(PodcastJPADAO.class.getCanonicalName());
 	
 	/** The application's persistent context provided by the application server. */
 	@PersistenceContext

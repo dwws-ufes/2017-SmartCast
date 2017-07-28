@@ -6,7 +6,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-07-28T16:32:33.122-0300")
+@Generated(value="Dali", date="2017-07-28T17:04:15.272-0300")
 @StaticMetamodel(Podcast.class)
 public class Podcast_ extends PersistentObjectSupport_ {
 	public static volatile ListAttribute<Podcast, Episode> episodes;

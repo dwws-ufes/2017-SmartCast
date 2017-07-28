@@ -9,4 +9,6 @@ import br.ufes.inf.nemo.smartcast.domain.Podcast;
 public interface ManagePodcastsService{
 	public List<Podcast> search(String strg);
 	public List<Podcast> getSome();
+	public List<Podcast> podcasts();
+	
 }

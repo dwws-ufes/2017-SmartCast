@@ -2,6 +2,7 @@ package br.ufes.inf.nemo.smartcast.application;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -32,6 +33,8 @@ public class ManagePodcastsServiceBean implements ManagePodcastsService {
 		return podcastDao.retrieveSome(interval);
 	}
 	
+	
+	
 	@Override
 	public List<Podcast> search(String strg) {
 		List<Podcast> result = new ArrayList<>();
@@ -40,15 +43,23 @@ public class ManagePodcastsServiceBean implements ManagePodcastsService {
 				System.out.println("antes");
 				ParsePodcastFeed parser = new ParsePodcastFeed(strg);
 				Podcast podcast = parser.readFeed();
-				System.out.println("depois");
 				podcastDao.save(podcast);
 			}
 			result.add(podcastDao.retrieveByURL(strg));
 		} catch (MalformedURLException e) {
 
 		} finally {
-//			result.addAll(podcastDao.retrieveByTag(strg));
+			result.addAll(podcastDao.retrieveByTag("title", strg));
 		}
+		return result;
+	}
+
+
+
+	@Override
+	public List<Podcast> podcasts() {
+		List<Podcast> result = podcastDao.retrieveAll();
+		System.out.println("SIZE: " + result.size());
 		return result;
 	}
 

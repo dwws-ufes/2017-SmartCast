@@ -75,8 +75,7 @@ public class ParsePodcastFeed {
 			String width = "";
 			String height = "";
 			String subtitle = "";
-			ArrayList<String> category = new ArrayList<>();
-			ArrayList<String> categoryFeed = new ArrayList<>();
+			String category = "";
 			String summary = "";
 			String duration = "";
 			String enclosure = "";
@@ -104,19 +103,7 @@ public class ParsePodcastFeed {
 							putValue(feed, URL, url);
 							putValue(feed, LAST_BUILD_DATE, lastBuildDate);
 							putValue(feed, SUBTITLE, subtitle);
-							Tag cat;
-							if (feed.getTag(CATEGORY) == null) {
-								cat = new Tag();
-								cat.setName(CATEGORY);
-								feed.putTag(cat);
-							} else {
-								cat = feed.getTag(CATEGORY);
-							}
-							if (cat.getValue() == null) {
-								cat.setValue(new ArrayList<>());
-							}
-							feed.addAllTag(CATEGORY, categoryFeed);
-							categoryFeed = new ArrayList<>();
+							putValue(feed, CATEGORY, category);
 							putValue(feed, SUMMARY, summary);
 						}
 						event = eventReader.nextEvent();
@@ -162,9 +149,9 @@ public class ParsePodcastFeed {
 						break;
 					case CATEGORY:
 						if (event.asStartElement().getName().getPrefix().equals("itunes")) {
-							categoryFeed.add(getAttribute(event, "text"));
+							category = getAttribute(event, "text");
 						} else {
-							category.add(getCharacterData(event, eventReader));
+							category = getCharacterData(event, eventReader);
 						}
 						break;
 					case SUMMARY:
@@ -193,25 +180,13 @@ public class ParsePodcastFeed {
 						putValue(ep, GUID, guid);
 						putValue(ep, URL, url);
 						putValue(ep, SUBTITLE, subtitle);
-						Tag cat;
-						if (ep.getTag(CATEGORY) == null) {
-							cat = new Tag();
-							cat.setName(CATEGORY);
-							ep.putTag(cat);
-						} else {
-							cat = ep.getTag(CATEGORY);
-						}
-						if (cat.getValue() == null) {
-							cat.setValue(new ArrayList<>());
-						}
-						ep.addAllTag(CATEGORY, category);
-						category = new ArrayList<>();
+						putValue(ep, CATEGORY, category);
 						putValue(ep, SUMMARY, summary);
 						putValue(ep, DURATION, duration);
 						putValue(ep, ENCLOSURE, enclosure);
 						putValue(ep, PUB_DATE, pubDate);
 						feed.addEpisode(ep);
-						continue;
+						// continue;
 					} else if (endLocal == (IMAGE)) {
 						Tag tg = new Tag();
 						tg.setTags(new ArrayList<>());

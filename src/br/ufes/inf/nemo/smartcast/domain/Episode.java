@@ -3,6 +3,8 @@ package br.ufes.inf.nemo.smartcast.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -22,8 +24,8 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 
 	@ManyToOne
 	private Podcast podcast;
-	
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 
 	public Podcast getPodcast() {
@@ -45,39 +47,43 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 	}
 
 	@Override
-	public void putTag(Tag tag){
+	public void putTag(Tag tag) {
 		this.tags.add(tag);
 	}
-	
+
 	@Override
-	public void putTag(String name, String tagValue){
+	public void putTag(String name, String tagValue) {
 		Tag tag = new Tag();
 		tag.setValue(new ArrayList<>());
 		tag.addValue(tagValue);
 		tag.setName(name);
 		this.tags.add(tag);
 	}
-	
+
 	@Override
-	public Tag getTag(String name){
+	public Tag getTag(String name) {
 		Tag t = null;
 		for (Tag tag : tags) {
-			if(tag.getName().equals(name)){
+			if (tag.getName().equals(name)) {
 				t = tag;
 				break;
 			}
 		}
 		return t;
 	}
-	
+
 	@Override
 	public void addAllTag(String name, List<String> values) {
 		Tag t = new Tag();
 		t.setName(name);
 		t.setValue(new ArrayList<>());
 		for (String string : values) {
-			t.addValue(string);
-			this.tags.add(t);
+			Tag j = this.getTag("title");
+			if (!string.isEmpty()) {
+				System.out.println(j.getValue().get(0) + " " + string);
+				t.addValue(string);
+				this.tags.add(t);
+			}
 		}
 	}
 }

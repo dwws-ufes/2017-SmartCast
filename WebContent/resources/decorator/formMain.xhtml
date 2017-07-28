@@ -4,14 +4,84 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
 
  
 		<!--<header>-->
-			<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
-			site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
-			<p>Ligula scelerisque justo sem accumsan diam quis<br />
-			vitae natoque dictum sollicitudin elementum.</p>
+		<h:form id ="MainPodcast">
+			<div class="row">
+	
+		    <p:dataScroller value="#{managePodcastsController.podcasts}" var="podcast" chunkSize="3">
+		        <f:facet name="header">
+		            Scroll Down to Load More Podcasts
+		        </f:facet>
+		 
+		        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+		            <p:graphicImage name="#podcast.image" /> 
+		 
+		            <p:outputPanel>
+		                <h:panelGrid columns="2" cellpadding="5">
+		                    <h:outputText value="Title:" />
+		                    <h:outputText value="#{podcast.title}" style="font-weight: bold"/>
+		 
+		                    <h:outputText value="Link:" />
+		                    <h:outputText value="#{podcast.link}" style="font-weight: bold"/>
+		 
+		                    <h:outputText value="Feed:" />
+		                    <h:outputText value="#{podcast.url}" style="font-weight: bold"/>
+		                </h:panelGrid>
+		            </p:outputPanel>
+		        </h:panelGrid>
+		    </p:dataScroller>
+		    </div>
+		</h:form>
+			
+							<!-- div class="4u 12u$(mobile)">
+								<article class="item">
+									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic02.jpg" alt="" /></a>
+									<header>
+										<h3>Ipsum Feugiat</h3>
+									</header>
+								</article>
+								<article class="item">
+									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic03.jpg" alt="" /></a>
+									<header>
+										<h3>Rhoncus Semper</h3>
+									</header>
+								</article>
+							</div>
+							<div class="4u 12u$(mobile)">
+								<article class="item">
+									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic04.jpg" alt="" /></a>
+									<header>
+										<h3>Magna Nullam</h3>
+									</header>
+								</article>
+								<article class="item">
+									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic05.jpg" alt="" /></a>
+									<header>
+										<h3>Natoque Vitae</h3>
+									</header>
+								</article>
+							</div>
+							<div class="4u$ 12u$(mobile)">
+								<article class="item">
+									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic06.jpg" alt="" /></a>
+									<header>
+										<h3>Dolor Penatibus</h3>
+									</header>
+								</article>
+								<article class="item">
+									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic07.jpg" alt="" /></a>
+									<header>
+										<h3>Orci Convallis</h3>
+									</header>
+								</article>
+							</div>
+					
+						</div>
+				</h:form-->				
 			
 			<!--</header>-->
 			<!--<footer>-->

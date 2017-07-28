@@ -11,8 +11,6 @@ import br.ufes.inf.nemo.smartcast.domain.Tag;
 @Local
 public interface PodcastDAO extends BaseDAO<Podcast>{
 	
-	public List<Podcast> retrieveByTag(String value);
-	
 	public List<Podcast> retrieveByTag(String name, String value);
 	
 	public List<Podcast> retrieveByTag(Tag tag);

@@ -23,10 +23,22 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	@OneToMany(mappedBy = "podcast",cascade = CascadeType.ALL)
 	private List<Episode> episodes;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 	
 	private String url;
+	
+	public String getImage(){
+		return this.getTag("image").getTag("url").getValue().get(0);
+	}
+	
+	public String getTitle(){
+		return this.getTag("title").getValue().get(0);
+	}
+	
+	public String getLink(){
+		return this.getTag("image").getTag("link").getValue().get(0);
+	}
 	
 	public List<Episode> getEpisodes() {
 		return episodes;
@@ -91,8 +103,13 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 		t.setName(name);
 		t.setValue(new ArrayList<>());
 		for (String string : values) {
-			t.addValue(string);
-			this.tags.add(t);
+			if(!string.isEmpty()){
+				System.out.println(string);
+				t.addValue(string);
+				this.tags.add(t);
+			}
 		}
 	}
+
+	
 }

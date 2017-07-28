@@ -10,62 +10,27 @@
  
 		<div class="container">
 					<header>
-						<h2>Podcasts</h2>
+						<h2>Faça sua busca pelo Podcast.</h2>
 					</header>
-						<h:form id ="listPodcasts">
-						<h:panelGroup id ="listPodcastsPanel">
-							<p>
-								<h:inputText id="search" value ="#{managePodcastsController.searchString}"/>
-								<p:commandButton value="search"  action="#{managePodcastsController.reloadPodcast()}"/>
-								
-							</p>
+						<h:form id ="searchListPodcast">
+							<h:panelGroup id ="listPodcastsPanel">
+								<p>
+								<h:outputText value="Buscar Podcast, inserindo endereço do Podcast"/>
+								<h:inputText id="searchPodcast" value ="#{managePodcastsController.searchString}"/>
+								<h:commandButton value="Buscar"  action="#{managePodcastsController.reloadPodcast()}"/>
+								</p>
 							</h:panelGroup>
-						</h:form>
-						<!-- div class="row">
-							<div class="4u 12u$(mobile)">
-								<article class="item">
-									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic02.jpg" alt="" /></a>
-									<header>
-										<h3>Ipsum Feugiat</h3>
-									</header>
-								</article>
-								<article class="item">
-									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic03.jpg" alt="" /></a>
-									<header>
-										<h3>Rhoncus Semper</h3>
-									</header>
-								</article>
-							</div>
-							<div class="4u 12u$(mobile)">
-								<article class="item">
-									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic04.jpg" alt="" /></a>
-									<header>
-										<h3>Magna Nullam</h3>
-									</header>
-								</article>
-								<article class="item">
-									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic05.jpg" alt="" /></a>
-									<header>
-										<h3>Natoque Vitae</h3>
-									</header>
-								</article>
-							</div>
-							<div class="4u$ 12u$(mobile)">
-								<article class="item">
-									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic06.jpg" alt="" /></a>
-									<header>
-										<h3>Dolor Penatibus</h3>
-									</header>
-								</article>
-								<article class="item">
-									<a href="#" class="image fit"><h:graphicImage value="resources/decorator/images/pic07.jpg" alt="" /></a>
-									<header>
-										<h3>Orci Convallis</h3>
-									</header>
-								</article>
-							</div>
-						</div> -->
-				</div>
- 
-
-</ui:composition>
+							
+							<h:panelGroup id ="listPodcastsSemantic">
+								<p>
+								<h:outputText value= "Buscar Podcast por parte do título, na Web Semântica"/>
+								<h:inputText id="searchSemantic" value ="#{managePodcastsSemanticController.searchStringSemantic}"/>
+								<h:commandButton value="Buscar"  action="#{managePodcastsSemanticController.searchPodcastSemantic}"/>
+								</p>
+							</h:panelGroup>
+						</h:form>	
+				
+		</div>
+			
+						
+		</ui:composition>	

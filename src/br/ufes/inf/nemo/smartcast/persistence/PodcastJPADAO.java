@@ -38,29 +38,6 @@ public class PodcastJPADAO extends BaseJPADAO<Podcast> implements PodcastDAO {
 	}
 
 	@Override
-	public List<Podcast> retrieveByTag(String value) {
-		
-		logger.log(Level.FINE, "Retrieving the podcasts wich have some tag with the value \"{0}\" in its tags...", new Object[] { value });
-		
-		// Constructs the query over the Podcast class.
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Podcast> cq = cb.createQuery(Podcast.class);
-		Root<Podcast> rootPodcast = cq.from(Podcast.class);
-		Root<Tag> rootTag = cq.from(Tag.class);
-		
-		// Contructs the join between Podcast and Tag classes.
-		CollectionJoin<Podcast, Tag> join = rootPodcast.joinCollection("tags", JoinType.INNER);
-		
-		// Filters the query with the value.
-		cq.where(cb.isMember(value, join.get(Tag_.value)));
-		List<Podcast> result = entityManager.createQuery(cq).getResultList();
-		logger.log(Level.INFO, "Retrieve the podcasts wich some tag with the value \"{0}\" in its tags returned {1} results.",
-				new Object[] { value, result.size() });
-		
- 		return result;
-	}
-
-	@Override
 	public List<Podcast> retrieveByTag(String name, String value) {
 
 		logger.log(Level.FINE, "Retrieving the podcasts wich have a tag named \"{0}\" with the value \"{1}\"...", new Object[] { name, value });

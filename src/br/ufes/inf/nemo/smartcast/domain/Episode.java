@@ -25,6 +25,7 @@ public class Episode extends PersistentObjectSupport implements Tageable {
 	@ManyToOne
 	private Podcast podcast;
 
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 

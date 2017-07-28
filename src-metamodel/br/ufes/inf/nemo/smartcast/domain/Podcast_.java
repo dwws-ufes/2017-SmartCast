@@ -6,10 +6,19 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
+<<<<<<< HEAD
 @Generated(value="Dali", date="2017-07-28T17:04:15.272-0300")
 @StaticMetamodel(Podcast.class)
 public class Podcast_ extends PersistentObjectSupport_ {
 	public static volatile ListAttribute<Podcast, Episode> episodes;
 	public static volatile ListAttribute<Podcast, Tag> tags;
 	public static volatile SingularAttribute<Podcast, String> url;
+=======
+@Generated(value="Dali", date="2017-07-25T16:05:55.609-0300")
+@StaticMetamodel(Podcast.class)
+public class Podcast_ extends PersistentObjectSupport_ {
+	public static volatile ListAttribute<Podcast, Episode> episodes;
+	public static volatile SingularAttribute<Podcast, String> url;
+	public static volatile ListAttribute<Podcast, Tag> tags;
+>>>>>>> refs/remotes/origin/master
 }

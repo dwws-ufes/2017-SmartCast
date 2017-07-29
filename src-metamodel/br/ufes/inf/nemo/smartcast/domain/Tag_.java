@@ -7,11 +7,7 @@ import javax.persistence.metamodel.MapAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-<<<<<<< HEAD
-@Generated(value="Dali", date="2017-07-28T17:04:15.278-0300")
-=======
-@Generated(value="Dali", date="2017-07-25T15:16:50.295-0300")
->>>>>>> refs/remotes/origin/master
+@Generated(value="Dali", date="2017-07-29T15:00:13.027-0300")
 @StaticMetamodel(Tag.class)
 public class Tag_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<Tag, String> name;

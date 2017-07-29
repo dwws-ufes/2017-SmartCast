@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
@@ -23,7 +24,7 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	@OneToMany(mappedBy = "podcast",cascade = CascadeType.ALL)
 	private List<Episode> episodes;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Tag> tags;
 	
 	private String url;
@@ -37,7 +38,7 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	}
 	
 	public String getLink(){
-		return this.getTag("image").getTag("link").getValue().get(0);
+		return this.getTag("link").getValue().get(0);
 	}
 	
 	public List<Episode> getEpisodes() {

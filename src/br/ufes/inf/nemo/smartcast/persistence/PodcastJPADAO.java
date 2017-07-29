@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CollectionJoin;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
@@ -49,7 +50,7 @@ public class PodcastJPADAO extends BaseJPADAO<Podcast> implements PodcastDAO {
 		Root<Tag> rootTag = cq.from(Tag.class);
 		
 		// Contructs the join between Podcast and Tag classes.
-		CollectionJoin<Podcast, Tag> join = rootPodcast.joinCollection("tags");
+		Join<Podcast, Tag> join = rootPodcast.join(Podcast_.tags);
 		
 		// Filters the query with the value.
 		cq.where(cb.and(cb.isMember(value, join.get(Tag_.value))),cb.equal(join.get(Tag_.name), name));

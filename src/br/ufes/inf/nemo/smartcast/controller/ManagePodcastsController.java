@@ -7,12 +7,6 @@ import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.inject.Named;
 
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Literal;
-
 import br.ufes.inf.nemo.smartcast.application.ManagePodcastsService;
 import br.ufes.inf.nemo.smartcast.domain.Podcast;
 
@@ -27,6 +21,7 @@ public class ManagePodcastsController {
 	
 	@EJB ManagePodcastsService managePodcastService;
 	
+	
 //	public String getImageUrl(Podcast podcast){
 //		return podcast.getTag("image").getTag("url").getValue().get(0);
 //	}
@@ -34,6 +29,7 @@ public class ManagePodcastsController {
 //	public String getImageLink(Podcast podcast){
 //		return podcast.getTag("image").getTag("link").getValue().get(0);
 //	}
+	
 	
 	public void setSearchString(String searchString){
 		System.out.println("SEARCH");
@@ -48,9 +44,8 @@ public class ManagePodcastsController {
 		return searchString;
 	}
 	public String reloadPodcast(){
-		System.out.println(getSearchString());
 		if(searchString == null || searchString.equals("")){
-			//System.out.println("Podcast1");
+			System.out.println("Entrou no vazio");
 			this.podcasts = managePodcastService.getSome();
 		}else{
 			System.out.println("ReloadPodcast");
@@ -68,12 +63,12 @@ public class ManagePodcastsController {
 	
 	
 	public List<Podcast> getPodcasts(){
-		return managePodcastService.podcasts();
+		System.out.println("Retornou lista podcast");
+		System.out.println(podcasts);
+		return podcasts;
 	}
 	
-	public void setPodcast(String busca, int index){
-		
-	}
+	
 
 	public String getSearchStringSemantic() {
 		System.out.printf("Podcast:",searchStringSemantic);

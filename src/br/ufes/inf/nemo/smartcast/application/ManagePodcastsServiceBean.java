@@ -46,8 +46,6 @@ public class ManagePodcastsServiceBean implements ManagePodcastsService {
 			}
 			result.add(podcastDao.retrieveByURL(strg));
 		} catch (MalformedURLException e) {
-
-		} finally {
 			result.addAll(podcastDao.retrieveByTag("title", strg));
 		}
 		return result;

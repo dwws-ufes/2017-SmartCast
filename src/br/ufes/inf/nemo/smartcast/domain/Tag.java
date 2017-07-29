@@ -1,7 +1,6 @@
 package br.ufes.inf.nemo.smartcast.domain;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
@@ -20,16 +20,18 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 public class Tag extends PersistentObjectSupport implements Tageable{
 	
 	private String name;
-	
-	@ElementCollection
+	@Lob
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> value;
 	
-	@OneToMany(mappedBy = "rootTag", cascade = CascadeType.ALL)
+	
+	@OneToMany(mappedBy = "rootTag", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Tag> tags;
 	
 	@ManyToOne
 	private Tag rootTag;
 	
+	@Lob
 	@ElementCollection
 	@CollectionTable(name="tag_attributes")
 	@MapKeyColumn(name="attributenamename")

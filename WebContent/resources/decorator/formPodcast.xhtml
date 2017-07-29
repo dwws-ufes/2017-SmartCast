@@ -17,17 +17,17 @@
 								<p>
 								<h:outputText value="Buscar Podcast, inserindo endereço do Podcast"/>
 								<h:inputText id="searchPodcast" value ="#{managePodcastsController.searchString}"/>
-								<h:commandButton value="Buscar"  action="#{managePodcastsController.reloadPodcast()}"/>
+								<h:commandButton value="Buscar"  action="#{managePodcastsController.reloadPodcast}"/>
 								</p>
 							</h:panelGroup>
 							
-							<h:panelGroup id ="listPodcastsSemantic">
+						 	<h:panelGroup id ="listPodcastsSemantic">
 								<p>
 								<h:outputText value= "Buscar Podcast por parte do título, na Web Semântica"/>
 								<h:inputText id="searchSemantic" value ="#{managePodcastsSemanticController.searchStringSemantic}"/>
 								<h:commandButton value="Buscar"  action="#{managePodcastsSemanticController.searchPodcastSemantic}"/>
 								</p>
-							</h:panelGroup>
+							</h:panelGroup> 
 						</h:form>	
 				
 		</div>

@@ -57,17 +57,19 @@
 		 <!-- Main -->
 		<div id="main">		
 			<section id="top" class="one dark cover">
-			<ui:insert name="contents">
-			
-			</ui:insert>		
+				<div id="main_area">
+					<ui:insert name="contents">
+						 <ui:include src="/resources/decorator/formMain.xhtml"/> 
+					</ui:insert>
+				</div>		
 			</section>
 		
-				<ui:include src="/resources/decorator/formMain.xhtml"/>
+			
 			<!-- Portfolio -->
 			<section id="portfolio" class="two">
 				<div id="portfolio_area">
 					<ui:insert name="portfolio_area" >
-				<!-- 		<ui:include src="/resources/decorator/formPodcast.xhtml"/> -->
+				 		<ui:include src="/resources/decorator/formPodcast.xhtml"/> 	
 					</ui:insert>
 				</div>	
 			</section>	

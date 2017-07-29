@@ -79,6 +79,7 @@ public class ParsePodcastFeed {
 			String summary = "";
 			String duration = "";
 			String enclosure = "";
+			boolean firstLink = true;
 
 			// First create a new XMLInputFactory
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -98,7 +99,6 @@ public class ParsePodcastFeed {
 							putValue(feed, DESCRIPTION, description);
 							putValue(feed, LANGUAGE, language);
 							putValue(feed, COPYRIGHT, copyright);
-							putValue(feed, LINK, link);
 							putValue(feed, AUTHOR, author);
 							putValue(feed, URL, url);
 							putValue(feed, LAST_BUILD_DATE, lastBuildDate);
@@ -116,6 +116,10 @@ public class ParsePodcastFeed {
 						break;
 					case LINK:
 						link = getCharacterData(event, eventReader);
+						if(firstLink){
+							putValue(feed, LINK, link);
+							firstLink = false;
+						}
 						break;
 					case GUID:
 						guid = getCharacterData(event, eventReader);

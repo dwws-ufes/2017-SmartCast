@@ -29,6 +29,8 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	
 	private String url;
 	
+	
+	
 	public String getImage(){
 		return this.getTag("image").getTag("url").getValue().get(0);
 	}
@@ -39,6 +41,12 @@ public class Podcast extends PersistentObjectSupport implements Tageable{
 	
 	public String getLink(){
 		return this.getTag("link").getValue().get(0);
+	}
+	public String getDescription(){
+		return this.getTag("description").getValue().get(0);
+	}
+	public String getCategory(){
+		return this.getTag("category").getValue().get(0);
 	}
 	
 	public List<Episode> getEpisodes() {

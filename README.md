@@ -96,6 +96,45 @@ To make sure everything is in order before we actually start developing the appl
 
 2. Make sure the MySQL server is already started, start the WildFly server and open http://localhost:8080/Smartcast/ -- the initial screen should be shown, as in the figure below;
 
+
+# Project creation and JButler set-up in Eclipse
+Using Jena in a Java EE WebApp Smartcast
+
+# Add Jena to the Project:
+
+1. Right-click the CDITravel project and select Configure > Convert to Maven Project.
+Follow the wizard accepting the default options;
+
+2. Open the pom.xml file and add the Jena dependencies according to the
+instructions of its website: https://jena.apache.org/download/index.cgi
+
+```html
+<!-- Add this after </build> -->
+ <dependencies>
+ 	<dependency>
+ 		<groupId>org.apache.jena</groupId>
+ 	<artifactId>apache-jena-libs</artifactId>
+ 		<type>pom</type>
+ 		<version>3.3.0</version>
+ 	</dependency>
+ </dependencies>
+```
+Open WebContents/WEB-INF/web.xml and change the <web-app> opening tag to
+the following:
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+id="SmartCast" version="3.1">
+
+```
+
+
+Save and update the project if needed. Check that Jena JAR files were added to
+Java Resources > Libraries > Maven Dependencies.
+
 # Authors
 
 @github/JMoicano

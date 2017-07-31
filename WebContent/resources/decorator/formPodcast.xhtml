@@ -15,22 +15,43 @@
 						<h:form id ="searchListPodcast">
 							<h:panelGroup id ="listPodcastsPanel">
 								<p>
-								<h:outputText value="Buscar Podcast, inserindo endereço do Podcast"/>
-								<h:inputText id="searchPodcast" value ="#{managePodcastsController.searchString}"/>
-								<h:commandButton value="Buscar"  action="#{managePodcastsController.reloadPodcast}"/>
+								<h:outputText value="Buscar Podcast, inserindo endereço do Podcast"/>						 	 
+								<h:inputText id="searchPodcast" required="true" value ="#{managePodcastsController.searchString}" pt:placeholder="Insira um endereço de Feed xml válido" validatorMessage="Formato de xml invalido">
+						 	    	<f:validateLength minimum="10" />
+						 	    </h:inputText>
+						 	    <p:message for="searchPodcast"/>
+						 	    
+								<h:commandButton id = "buttonSearch" value="Buscar"  action="#{managePodcastsController.reloadPodcast}"/>
 								</p>
 							</h:panelGroup>
-							
+						</h:form>		
+						<h:form id ="searchSemanticListPodcast">	
 						 	<h:panelGroup id ="listPodcastsSemantic">
 								<p>
 								<h:outputText value= "Buscar Podcast por parte do título, na Web Semântica"/>
-								<h:inputText id="searchSemantic" value ="#{managePodcastsSemanticController.searchStringSemantic}"/>
-								<h:commandButton value="Buscar"  action="#{managePodcastsSemanticController.searchPodcastSemantic}"/>
+								<h:inputText id="searchSemantic" required="true" value ="#{managePodcastsSemanticController.searchStringSemantic}" />
+								<h:commandButton id = "buttonSemantic" value="Buscar"  action="#{managePodcastsSemanticController.searchPodcastSemantic}"/>
 								</p>
 							</h:panelGroup> 
 						</h:form>	
 				
 		</div>
+		<script>jsf.ajax.addOnEvent(function(data) {
+			var ajaxstatus = data.status;
+			var ajaxloader = document.getElementById("ajaxloader");
+			switch (ajaxstatus) {
+				case "begin":
+					ajaxloader.style.display = 'block';
+					break;
+				case "complete":
+					ajaxloader.style.display = 'none';
+					break;
+				case "success":
+					break;
+			}});
+		</script>
+		<img id="ajaxloader" 
+		src="#{facesContext.externalContext.requestContextPath}/resources/decorator/images/ajaxloader.gif" style="display: none; float: right;" />
 			
 						
 		</ui:composition>	

@@ -13,7 +13,7 @@
 			<h2 class="alt"><strong>SmartCast</strong></h2>
 		</header>	
 		<h:form id ="MainPodcast">
-			<p:dataScroller value="#{dataScrollerView.podcasts}" var="podcast" chunkSize="3">
+			<p:dataScroller value="#{dataScrollerView.podcasts}" var="podcast" chunkSize="6">
 		        <f:facet name="header">
 		            Scroll Down to Load More Podcasts
 		        </f:facet>
@@ -27,7 +27,8 @@
 		                    <h:outputText value="#{podcast.title}" style="font-weight: bold"/>
 		 
 		                    <h:outputText value="Link:" />
-		                    <h:outputText value="#{podcast.link}" style="font-weight: bold"/>
+		                    
+		                    <h:outputLink value="#{podcast.link}" style="font-weight: bold; color:blue">Clique para assistir o podcast</h:outputLink>
 		 
 		                    <h:outputText value="Feed:" />
 		                    <h:outputText value="#{podcast.url}" style="font-weight: bold"/>

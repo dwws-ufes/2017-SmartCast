@@ -51,7 +51,7 @@ public class ManagePodcastsController {
 			System.out.println("ReloadPodcast");
 			this.podcasts = managePodcastService.search(searchString);
 		}
-		return null;
+		return "/resultSemantic/index.faces#portfolio?faces-redirect=true";
 	}	
 	public String searchPodcastSemantic(){
 		//Podcast Semantic

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      template="/resources/decorator/decorator.xhtml">
+	
+	<ui:define name="title"><h:outputText value="Retorno da pesquisa desejada" /></ui:define>
+      
+    <ui:define name="portfolio_area">			
+		<header>
+			<h2 class="alt">Podcasts encontrados</h2>	
+		</header>
+		<h:form id ="searchResultPodcast">
+		    
+		    
+			
+			
+			<h:panelGroup id ="listPodcastsPanel">
+				<p:selectOneRadio id="console" value="#{resultPodcastsSemanticController.title}" layout="pageDirection" style="text-align:left">
+		   		<f:selectItems value="#{managePodcastsSemanticController.podcasts}" var="podcast" itemLabel="#{podcast.title}" itemValue="#{podcast.title}"/>
+		   		<p:ajax update="panelGeral" event="change"/>  
+		    	</p:selectOneRadio>
+		    </h:panelGroup>	
+		    <h:panelGroup id ="panelGeral">
+		   <!--  <h:outputText id="panelGeral" value="#{resultPodcastsSemanticController.title}" escape="false" /> -->
+		    	 <h:commandButton type="submit" id = "buttonResult" value="Submeter" action = "#{resultPodcastsSemanticController.searchPodcastSemantic}"/>
+			 	<p>Se preferir faça uma nova  <b><a href="#{facesContext.externalContext.requestContextPath}/index.faces#portfolio" id="registration-link">Busca</a></b></p>
+			</h:panelGroup>		 		
+			
+			
+		   
+									  
+			
+			</h:form>	
+			
+      </ui:define>	
+</ui:composition>

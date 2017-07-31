@@ -20,7 +20,7 @@ import br.ufes.inf.nemo.smartcast.persistence.PodcastDAO;
 @SessionScoped
 @Stateful
 
-public class SessionSearchSemanticBean implements SessionSearchSemantic{
+public class SessionSearchSemanticBean extends SessionSearchSemantic{
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
